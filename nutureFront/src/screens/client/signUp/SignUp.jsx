@@ -5,8 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
+import Link from "../../../components/link/Link";
 
-const SignIn = () => {
+const SignUp = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
@@ -15,11 +16,11 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const goToSignInClientScreen = () => {
+  const signIn = () => {
     navigation.navigate("");
   };
 
-  const goToPhoneAgeClientScreen = () => {
+  const handleSubmit = () => {
     if (!name || !email || !cpf || !password || !confirmPassword) {
       alert("Preencha todos os campos");
       return;
@@ -67,11 +68,12 @@ const SignIn = () => {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
-          <Button>Registrar</Button>
+          <Button onPress={handleSubmit}>Registrar</Button>
+          <Link>Já tem uma conta? Entrar</Link>
         </Kav>
       </Background>
     </Container>
   );
 };
 
-export default SignIn;
+export default SignUp;

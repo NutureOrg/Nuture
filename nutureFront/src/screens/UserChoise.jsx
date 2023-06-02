@@ -9,7 +9,7 @@ const UserChoise = () => {
   const navigation = useNavigation();
 
   const isClient = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate('SignUp');
   }
 
   const isDistribuitor = () => {
