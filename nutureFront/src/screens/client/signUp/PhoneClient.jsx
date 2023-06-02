@@ -46,7 +46,7 @@ const PhoneClient = () => {
     const { name, email, cpf, password } = route.params;
     const formattedBirthday = formatDateToISO(birthday);
 
-    navigation.navigate("", {
+    navigation.navigate("RecipeOrDiet", {
       name,
       email,
       cpf,

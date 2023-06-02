@@ -9,6 +9,8 @@ import UserChoise from "../screens/UserChoise";
 import SignUp from "../screens/client/signUp/SignUp";
 import SignIn from "../screens/client/signIn/SignIn";
 import PhoneClient from "../screens/client/signUp/PhoneClient";
+import Gender from "../screens/client/signUp/Gender";
+import RecipeOrDiet from "../screens/client/recipeOrDiet/RecipeOrDiet";
 
 const Routes = () => {
   return (
@@ -35,6 +37,16 @@ const Routes = () => {
         <Stack.Screen
           name="PhoneClient"
           component={PhoneClient}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Gender"
+          component={Gender}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RecipeOrDiet"
+          component={RecipeOrDiet}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

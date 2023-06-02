@@ -7,7 +7,7 @@ import Title from "../../../components/title/Title";
 import { CheckBox } from "react-native-elements";
 import Button from "../../../components/button/Button";
 
-const GenderScreen = () => {
+const Gender = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -45,7 +45,7 @@ const GenderScreen = () => {
 
     const { name, email, cpf, password, phone, birthday } = route.params;
 
-    navigation.navigate("Frequency", {
+    navigation.navigate("", {
       name,
       email,
       cpf,
@@ -151,4 +151,4 @@ const GenderScreen = () => {
   );
 };
 
-export default GenderScreen;
+export default Gender;

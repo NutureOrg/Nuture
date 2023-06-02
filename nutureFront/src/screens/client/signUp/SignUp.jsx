@@ -31,7 +31,7 @@ const SignUp = () => {
       return;
     }
 
-    navigation.navigate("", {
+    navigation.navigate("PhoneClient", {
       name,
       email,
       cpf,
