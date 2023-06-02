@@ -8,6 +8,7 @@ const Stack = createStackNavigator();
 import UserChoise from "../screens/UserChoise";
 import SignUp from "../screens/client/signUp/SignUp";
 import SignIn from "../screens/client/signIn/SignIn";
+import PhoneClient from "../screens/client/signUp/PhoneClient";
 
 const Routes = () => {
   return (
@@ -29,6 +30,11 @@ const Routes = () => {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PhoneClient"
+          component={PhoneClient}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
