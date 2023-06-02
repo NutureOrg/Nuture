@@ -17,7 +17,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const signIn = () => {
-    navigation.navigate("");
+    navigation.navigate("SignIn");
   };
 
   const handleSubmit = () => {
@@ -69,7 +69,7 @@ const SignUp = () => {
             onChangeText={setConfirmPassword}
           />
           <Button onPress={handleSubmit}>Registrar</Button>
-          <Link>Já tem uma conta? Entrar</Link>
+          <Link onPress={signIn}>Já tem uma conta? Entrar</Link>
         </Kav>
       </Background>
     </Container>

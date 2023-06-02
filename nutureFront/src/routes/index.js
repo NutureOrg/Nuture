@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 
 import UserChoise from "../screens/UserChoise";
 import SignUp from "../screens/client/signUp/SignUp";
+import SignIn from "../screens/client/signIn/SignIn";
 
 const Routes = () => {
   return (
@@ -23,6 +24,11 @@ const Routes = () => {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
