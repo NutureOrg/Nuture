@@ -18,11 +18,11 @@ const Gender = () => {
   const [formattedWeight, setFormattedWeight] = useState("");
 
   useEffect(() => {
-    setFormattedHeight(`${height} cm`);
+    setFormattedHeight(`${height}cm`);
   }, [height]);
 
   useEffect(() => {
-    setFormattedWeight(`${weight} kg`);
+    setFormattedWeight(`${weight}kg`);
   }, [weight]);
 
   const handleSexChange = (value) => {
@@ -45,7 +45,7 @@ const Gender = () => {
 
     const { name, email, cpf, password, phone, birthday } = route.params;
 
-    navigation.navigate("", {
+    navigation.navigate("Frequency", {
       name,
       email,
       cpf,

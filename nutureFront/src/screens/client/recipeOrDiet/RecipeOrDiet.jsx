@@ -1,19 +1,29 @@
 import React from "react";
 import { Container, Background } from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Title from "../../../components/title/Title";
 import Button from "../../../components/button/Button";
 
 const RecipeOrDiet = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const isRecipe = () => {
     navigation.navigate("");
   };
 
   const isDiet = () => {
-    navigation.navigate("Gender");
+    const { name, email, cpf, password, phone, birthday } = route.params;
+
+    navigation.navigate("Gender", {
+      name,
+      email,
+      cpf,
+      password,
+      phone,
+      birthday
+    });
   };
 
   return (
