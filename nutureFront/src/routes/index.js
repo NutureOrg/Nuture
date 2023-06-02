@@ -6,14 +6,23 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 import UserChoise from "../screens/UserChoise";
+import SignIn from "../screens/client/signIn/SignIn";
 
 const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        
+        {/* Client area */}
+
         <Stack.Screen
           name="UserChoise"
           component={UserChoise}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

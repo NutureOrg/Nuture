@@ -9,7 +9,7 @@ const UserChoise = () => {
   const navigation = useNavigation();
 
   const isClient = () => {
-    navigation.navigate('');
+    navigation.navigate('SignIn');
   }
 
   const isDistribuitor = () => {
@@ -20,7 +20,7 @@ const UserChoise = () => {
     <Container>
       <Background source={require("../assets/BackgroundImage.jpg")}>
         <Title text="Como deseja utilizar nosso app?" />
-        <Button>Sou Cliente</Button>
+        <Button onPress={isClient}>Sou Cliente</Button>
         <Button>Centro de Distribuição</Button>
       </Background>
     </Container>
