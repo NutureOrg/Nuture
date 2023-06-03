@@ -42,15 +42,22 @@ const SignIn = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Ocorreu um erro ao fazer login.");
+        }
+      })
       .then((data) => {
         console.log(data);
-        navigation.navigate("");
+        navigation.navigate("Profile");
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("Ocorreu um erro ao fazer login. Tente novamente mais tarde.");
       });
+      console.log(loginData)
   };
 
   const signUpClient = () => {
