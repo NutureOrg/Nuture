@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
+// client area
 import UserChoise from "../screens/UserChoise";
 import SignUp from "../screens/client/signUp/SignUp";
 import SignIn from "../screens/client/signIn/SignIn";
@@ -12,6 +13,11 @@ import PhoneClient from "../screens/client/signUp/PhoneClient";
 import Gender from "../screens/client/signUp/Gender";
 import RecipeOrDiet from "../screens/client/recipeOrDiet/RecipeOrDiet";
 import Frequency from "../screens/client/signUp/Frequency";
+
+// distributor area
+import SignUpDist from "../screens/distributor/signUp/SignUpDist";
+import DescDist from "../screens/distributor/signUp/DescDist";
+import Adress from "../screens/distributor/signUp/adress";
 
 const Routes = () => {
   return (
@@ -53,6 +59,24 @@ const Routes = () => {
         <Stack.Screen
           name="Frequency"
           component={Frequency}
+          options={{ headerShown: false }}
+        />
+
+        {/* Distributor area */}
+
+        <Stack.Screen
+          name="SignUpDist"
+          component={SignUpDist}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DescDist"
+          component={DescDist}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Adress"
+          component={Adress}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
