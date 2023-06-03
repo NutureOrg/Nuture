@@ -13,4 +13,13 @@ export const Background = styled.ImageBackground`
   align-items: center;
 `;
 
+export const InputContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 307px;
+  max-height: 100%;
+`;
+
 export const Kav = styled.KeyboardAvoidingView``;

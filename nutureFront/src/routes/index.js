@@ -17,7 +17,9 @@ import Frequency from "../screens/client/signUp/Frequency";
 // distributor area
 import SignUpDist from "../screens/distributor/signUp/SignUpDist";
 import DescDist from "../screens/distributor/signUp/DescDist";
-import Adress from "../screens/distributor/signUp/adress";
+import Address from "../screens/distributor/signUp/Address";
+import Operation from "../screens/distributor/signUp/Operation";
+import PhoneDist from "../screens/distributor/signUp/PhoneDist";
 
 const Routes = () => {
   return (
@@ -75,8 +77,18 @@ const Routes = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Adress"
-          component={Adress}
+          name="Address"
+          component={Address}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Operation"
+          component={Operation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PhoneDist"
+          component={PhoneDist}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
