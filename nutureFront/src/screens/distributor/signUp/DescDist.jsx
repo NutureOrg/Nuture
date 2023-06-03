@@ -24,7 +24,7 @@ const DescDist = () => {
 
     const { name, email, cnpj, password } = route.params;
 
-    navigation.navigate("Adress", {
+    navigation.navigate("Address", {
       name,
       email,
       cnpj,

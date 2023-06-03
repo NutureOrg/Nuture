@@ -20,6 +20,24 @@ const SignUpDist = () => {
     navigation.navigate("SignIn");
   };
 
+  const formatCnpj = (cnpjValue) => {
+    // Remove qualquer caractere que não seja um número
+    const numericCnpj = cnpjValue.replace(/\D/g, "");
+
+    // Aplica a máscara de CNPJ (##.###.###/####-##)
+    const maskedCnpj = numericCnpj.replace(
+      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/,
+      "$1.$2.$3/$4-$5"
+    );
+
+    return maskedCnpj;
+  };
+
+  const handleCnpjChange = (cnpjValue) => {
+    const formattedCnpj = formatCnpj(cnpjValue);
+    setCnpj(formattedCnpj);
+  };
+
   const handleSubmit = () => {
     if (!name || !email || !cnpj || !password || !confirmPassword) {
       alert("Preencha todos os campos");
@@ -58,9 +76,9 @@ const SignUpDist = () => {
             onChangeText={setEmail}
           />
           <Input
-            placeholder="Cnpj válido"
+            placeholder="CNPJ válido"
             value={cnpj}
-            onChangeText={setCnpj}
+            onChangeText={handleCnpjChange}
           />
           <Input
             placeholder="Nova senha"
