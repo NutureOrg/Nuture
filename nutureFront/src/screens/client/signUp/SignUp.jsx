@@ -20,6 +20,27 @@ const SignUp = () => {
     navigation.navigate("SignIn");
   };
 
+  const formatCpf = (value) => {
+    const cpfOnlyNumbers = value.replace(/[^\d]/g, "");
+
+    let formattedCpf = "";
+    for (let i = 0; i < cpfOnlyNumbers.length; i++) {
+      formattedCpf += cpfOnlyNumbers[i];
+      if (i === 2 || i === 5) {
+        formattedCpf += ".";
+      } else if (i === 8) {
+        formattedCpf += "-";
+      }
+    }
+
+    return formattedCpf;
+  };
+
+  const handleCpfChange = (value) => {
+    const cpfOnlyNumbers = value.replace(/[^\d]/g, "");
+    setCpf(formatCpf(cpfOnlyNumbers));
+  };
+
   const handleSubmit = () => {
     if (!name || !email || !cpf || !password || !confirmPassword) {
       alert("Preencha todos os campos");
@@ -57,7 +78,11 @@ const SignUp = () => {
             value={email}
             onChangeText={setEmail}
           />
-          <Input placeholder="CPF válido" value={cpf} onChangeText={setCpf} />
+          <Input
+            placeholder="CPF válido"
+            value={cpf}
+            onChangeText={handleCpfChange}
+          />
           <Input
             placeholder="Nova senha"
             value={password}

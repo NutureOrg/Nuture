@@ -12,6 +12,7 @@ import PhoneClient from "../screens/client/signUp/PhoneClient";
 import Gender from "../screens/client/signUp/Gender";
 import RecipeOrDiet from "../screens/client/recipeOrDiet/RecipeOrDiet";
 import Frequency from "../screens/client/signUp/Frequency";
+import Recipe from "../screens/client/recipe/Recipe";
 
 const Routes = () => {
   return (
@@ -47,6 +48,11 @@ const Routes = () => {
         <Stack.Screen
           name="Frequency"
           component={Frequency}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Recipe"
+          component={Recipe}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

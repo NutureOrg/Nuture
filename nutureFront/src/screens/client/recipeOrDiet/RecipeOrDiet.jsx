@@ -10,7 +10,7 @@ const RecipeOrDiet = () => {
   const route = useRoute();
 
   const isRecipe = () => {
-    navigation.navigate("");
+    navigation.navigate("Recipe");
   };
 
   const isDiet = () => {
@@ -30,7 +30,7 @@ const RecipeOrDiet = () => {
     <Container>
       <Background source={require("../../../assets/BackgroundImage.jpg")}>
         <Title text="Você deseja consultar receitas ou montar um programa alimentar?" />
-        <Button>Consultar Receitas</Button>
+        <Button onPress={isRecipe}>Consultar Receitas</Button>
         <Button onPress={isDiet}>Programa alimentar</Button>
       </Background>
     </Container>
