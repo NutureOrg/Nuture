@@ -36,14 +36,6 @@ const PhoneDist = () => {
     const { name, email, cnpj, password, description, address, opening_hours } =
       route.params;
 
-    console.log(name);
-    console.log(description);
-    console.log(cnpj);
-    console.log(email);
-    console.log(opening_hours);
-    console.log(address);
-    console.log(phone);
-
     fetch("http://192.168.1.108:8080/nuture/distcenters", {
       method: "POST",
       body: JSON.stringify({
@@ -64,7 +56,7 @@ const PhoneDist = () => {
       .then((data) => {
         console.log(data);
         console.log('centro criado com sucesso');
-        navigation.navigate("PhoneDist");
+        navigation.navigate("SignIn");
       })
       .catch((error) => {
         console.error("Error:", error);

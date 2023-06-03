@@ -45,17 +45,6 @@ const Frequency = () => {
         }),
       });
 
-      console.log(name)
-      console.log(cpf)
-      console.log(email)
-      console.log(weight)
-      console.log(height)
-      console.log(birthday)
-      console.log(sex)
-      console.log(food_frequency)
-      console.log(password)
-      console.log(phone)
-
       if (response.ok) {
         alert("Usuário criado com sucesso");
         navigation.navigate("BreakFast");
