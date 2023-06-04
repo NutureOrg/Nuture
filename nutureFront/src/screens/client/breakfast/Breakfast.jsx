@@ -15,6 +15,21 @@ const Breakfast = () => {
     setBreakfast(value);
   };
 
+  const { name, email, cpf, password, phone, birthday, sex, height, weight, food_frequency } =
+      route.params;
+
+      console.log("Breakfast Values: ");
+      console.log(name);
+      console.log(cpf);
+      console.log(email);
+      console.log(weight);
+      console.log(height);
+      console.log(birthday);
+      console.log(sex);
+      console.log(food_frequency);
+      console.log(password);
+      console.log(phone);
+
   const goToLunchScreen = () => {
     if (!breakfast) {
       alert("Preencha o campo.");
