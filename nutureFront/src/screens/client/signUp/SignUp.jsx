@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Container, Background, Kav } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 

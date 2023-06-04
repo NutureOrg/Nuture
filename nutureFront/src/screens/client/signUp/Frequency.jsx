@@ -48,7 +48,7 @@ const Frequency = () => {
       if (response.ok) {
         alert("Usuário criado com sucesso");
 
-        navigation.navigate("Breakfast", {
+        navigation.navigate("SignIn", {
           name,
           email,
           cpf,
@@ -58,7 +58,6 @@ const Frequency = () => {
           sex,
           height,
           weight,
-          food_frequency,
         });
       } else {
         console.log("Error:", response.status);

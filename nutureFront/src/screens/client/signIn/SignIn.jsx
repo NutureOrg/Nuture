@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Background, Kav } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
@@ -8,11 +9,7 @@ import Button from "../../../components/button/Button";
 import Link from "../../../components/link/Link";
 
 const SignIn = () => {
-  const route = useRoute();
-  const userType = route.params?.userType || "";
-
   const navigation = useNavigation();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +21,7 @@ const SignIn = () => {
     setPassword(value);
   };
 
-  const signIn = () => {
+  const signIn = async () => {
     if (!email || !password) {
       alert("Preencha todos os campos");
       return;
@@ -35,37 +32,39 @@ const SignIn = () => {
       password: password.trim(),
     };
 
-    fetch(`http://192.168.1.108:8080/nuture/users/login`, {
-      method: "POST",
-      body: JSON.stringify(loginData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Ocorreu um erro ao fazer login.");
+    try {
+      const response = await fetch(
+        `http://192.168.1.108:8080/nuture/users/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(loginData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
-      .then((data) => {
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+
+        console.log("Usuário logado");
         console.log(data);
+
+        await AsyncStorage.setItem("token", token);
+
         navigation.navigate("Profile");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Ocorreu um erro ao fazer login. Tente novamente mais tarde.");
-      });
-      console.log(loginData)
+      } else {
+        throw new Error("Ocorreu um erro ao fazer login.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Ocorreu um erro ao fazer login. Tente novamente mais tarde.");
+    }
   };
 
   const signUpClient = () => {
     navigation.navigate("SignUp");
-  };
-
-  const signUpDistributor = () => {
-    navigation.navigate("SignUpDist");
   };
 
   return (
@@ -75,7 +74,7 @@ const SignIn = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Preencha as informações para entrar na sua conta" />
+          <Title>Preencha as informações para entrar na sua conta</Title>
           <Input
             placeholder="E-mail"
             value={email}
@@ -88,14 +87,7 @@ const SignIn = () => {
             onChangeText={handlePasswordChange}
           />
           <Button onPress={signIn}>Entrar</Button>
-          {userType === "client" && (
-            <Link onPress={signUpClient}>Criar conta como cliente</Link>
-          )}
-          {userType === "distributor" && (
-            <Link onPress={signUpDistributor}>
-              Criar conta como centro de distribuição
-            </Link>
-          )}
+          <Link onPress={signUpClient}>Criar conta</Link>
         </Kav>
       </Background>
     </Container>

@@ -16,12 +16,19 @@ import Recipe from "../screens/client/recipe/Recipe";
 import Lunch from "../screens/client/lunch/Lunch";
 import Breakfast from "../screens/client/breakfast/Breakfast";
 import Diet from "../screens/client/diet/Diet";
+import Profile from "../screens/client/profile/Profile";
+import StartScreen from "../screens/startScreen/StartScreen";
 
 const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {/* Client area */}
+        <Stack.Screen
+          name="StartScreen"
+          component={StartScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
@@ -70,6 +77,11 @@ const Routes = () => {
         <Stack.Screen
           name="Diet"
           component={Diet}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
