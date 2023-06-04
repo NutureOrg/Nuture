@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import { Container, Background, Kav } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -26,7 +26,7 @@ const Frequency = () => {
       route.params;
 
     try {
-      const response = await fetch("http://192.168.1.119:8080/nuture/users", {
+      const response = await fetch(`http://192.168.1.108:8080/nuture/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

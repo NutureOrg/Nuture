@@ -16,7 +16,7 @@ const Recipe = () => {
   const fetchRecipe = async () => {
     try {
       const client = axios.create({
-        headers: { Authorization: "Bearer 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" }
+        headers: { Authorization: `Bearer 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` }
       })
       const params = {
         messages: [{"role": "user", "content": `Generate a JSON of a recipe table for a person with a height of 1.75m and weight of 60kg, with the attributes "listFood" (a list of ingredients), "methodPreparation" (a string with a detailed description of the recipe preparation), "recipeDescription", and "category".

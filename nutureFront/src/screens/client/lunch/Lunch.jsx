@@ -92,7 +92,7 @@ const Lunch = () => {
 
     try {
       const client = axios.create({
-        headers: { Authorization: "Bearer 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" }
+        headers: { Authorization: `Bearer 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` }
       })
       const params = {
         messages: [{"role": "user", "content": finalPrompt}],
@@ -114,7 +114,7 @@ const Lunch = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.1.119:8080/nuture/users", {
+      const response = await fetch(`http://192.168.1.108:8080/nuture/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const Lunch = () => {
 
       if (response.ok) {
         alert("Usuário criado com sucesso");
-        navigation.navigate("BreakFast");
+        navigation.navigate("Breakfast");
       } else {
         console.log("Error:", response.status);
       }
