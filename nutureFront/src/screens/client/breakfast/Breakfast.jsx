@@ -1,37 +1,73 @@
-import React from "react";
+import { React, useState } from "react";
 import { Container, Background, Kav } from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 
-const BreakFast = () => {
+const Breakfast = () => {
   const navigation = useNavigation();
-  const [alimentos, setAlimentos] = useState("");
+  const route = useRoute();
+  const [breakfast, setBreakfast] = useState("");
 
-  const handleFrequency = (value) => {
-    setFood_frequency(value);
+  const handleBreakfast = (value) => {
+    setBreakfast(value);
   };
 
   const goToLunchScreen = () => {
-    navigation.navigate("");
+    if (!breakfast) {
+      alert("Preencha o campo.");
+      return;
+    }
+
+    const { name, email, cpf, password, phone, birthday, sex, height, weight, food_frequency } =
+      route.params;
+
+      console.log(name);
+      console.log(cpf);
+      console.log(email);
+      console.log(weight);
+      console.log(height);
+      console.log(birthday);
+      console.log(sex);
+      console.log(food_frequency);
+      console.log(password);
+      console.log(phone);
+
+    navigation.navigate(
+      "Lunch", {
+        name,
+        email,
+        cpf,
+        password,
+        phone,
+        birthday,
+        sex,
+        height,
+        weight,
+        breakfast,
+        food_frequency
+      }
+    );
   };
 
   return (
     <Container>
-      <Background source={require("../../../assets/backgroundImage.svg")}>
+      <Background source={require("../../../assets/BackgroundImage.jpg")}>
         <Kav
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Liste os alimentos que geralmente estão disponíveis na sua casa para o almoço" />
+          <Title text="Liste os alimentos que geralmente estão disponíveis na sua casa para o café da manhã" />
           <Input
-            placeholder="Ex: Arroz, ovo e tomate"
-            multiline={true}
+            value={breakfast}
+            onChangeText={handleBreakfast}
+            placeholder="Ex: Ovos, Pão, Leite"
+            multiline={false}
             numberOfLines={25}
             style={{
-              height: 150,
+              height: 50,
               paddingTop: 10,
             }}
           />
@@ -42,4 +78,4 @@ const BreakFast = () => {
   );
 };
 
-export default BreakFast;
+export default Breakfast;

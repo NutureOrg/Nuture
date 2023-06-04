@@ -20,25 +20,8 @@ const SignUp = () => {
     navigation.navigate("SignIn");
   };
 
-  const formatCpf = (value) => {
-    const cpfOnlyNumbers = value.replace(/[^\d]/g, "");
-
-    let formattedCpf = "";
-    for (let i = 0; i < cpfOnlyNumbers.length; i++) {
-      formattedCpf += cpfOnlyNumbers[i];
-      if (i === 2 || i === 5) {
-        formattedCpf += ".";
-      } else if (i === 8) {
-        formattedCpf += "-";
-      }
-    }
-
-    return formattedCpf;
-  };
-
   const handleCpfChange = (value) => {
-    const cpfOnlyNumbers = value.replace(/[^\d]/g, "");
-    setCpf(formatCpf(cpfOnlyNumbers));
+    setCpf(value);
   };
 
   const handleSubmit = () => {

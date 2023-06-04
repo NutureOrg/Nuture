@@ -13,6 +13,8 @@ import Gender from "../screens/client/signUp/Gender";
 import RecipeOrDiet from "../screens/client/recipeOrDiet/RecipeOrDiet";
 import Frequency from "../screens/client/signUp/Frequency";
 import Recipe from "../screens/client/recipe/Recipe";
+import Lunch from "../screens/client/lunch/Lunch";
+import Breakfast from "../screens/client/breakfast/Breakfast"
 
 const Routes = () => {
   return (
@@ -53,6 +55,16 @@ const Routes = () => {
         <Stack.Screen
           name="Recipe"
           component={Recipe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Breakfast"
+          component={Breakfast}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Lunch"
+          component={Lunch}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

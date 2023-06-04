@@ -26,7 +26,7 @@ const Frequency = () => {
       route.params;
 
     try {
-      const response = await fetch("http://192.168.1.108:8080/nuture/users", {
+      const response = await fetch("http://192.168.1.119:8080/nuture/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,20 +45,32 @@ const Frequency = () => {
         }),
       });
 
-      console.log(name)
-      console.log(cpf)
-      console.log(email)
-      console.log(weight)
-      console.log(height)
-      console.log(birthday)
-      console.log(sex)
-      console.log(food_frequency)
-      console.log(password)
-      console.log(phone)
+      console.log(name);
+      console.log(cpf);
+      console.log(email);
+      console.log(weight);
+      console.log(height);
+      console.log(birthday);
+      console.log(sex);
+      console.log(food_frequency);
+      console.log(password);
+      console.log(phone);
 
       if (response.ok) {
         alert("Usuário criado com sucesso");
-        navigation.navigate("BreakFast");
+        navigation.navigate(
+          "Breakfast",
+          name,
+          email,
+          cpf,
+          password,
+          phone,
+          birthday,
+          sex,
+          height,
+          weight,
+          food_frequency
+        );
       } else {
         console.log("Error:", response.status);
       }
