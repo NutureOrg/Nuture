@@ -50,7 +50,7 @@ const SignUp = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Preencha as informações para criar sua nova conta" />
+          <Title>Preencha as informações para criar sua nova conta</Title>
           <Input
             placeholder="Nome completo"
             value={name}

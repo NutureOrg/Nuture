@@ -1,162 +1,243 @@
-import { React, useState } from "react";
-import { Container, Background, Kav } from "./styles";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Container, TextArea, ScrollViewContainer } from "./styles";
+import { useRoute } from "@react-navigation/native";
+import axios from "axios";
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+} from "accordion-collapse-react-native";
 
 import Title from "../../../components/title/Title";
-import Input from "../../../components/input/Input";
-import Button from "../../../components/button/Button";
 
 const Diet = () => {
   const route = useRoute();
-  const[loading, setLoading] = useState(true)
+  const [dietData, setDietData] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  //TODO: Tela de Loading com Carregamento
+  useEffect(() => {
+    let isMounted = true;
 
-  if (loading) {
-    //Mostrar loading na tela
-  }
+    const fetchDietData = async () => {
+      let diet = {};
 
-  let diet = {}
+      const { height, weight, breakfast, food_frequency, lunch } = route.params;
 
-    const { name, email, cpf, password, phone, birthday, sex, height, weight, breakfast, food_frequency, lunch } =
-      route.params;
+      const fourMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, afternoon coffee, and dinner. In each attribute, include the meal times.
 
-    const fourMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, afternoon coffee, and dinner. In each attribute, include the meal times.
+translate the attributes value into Portuguese (THE ATTRIBUTE NAME MUST BE IN ENGLISH)
 
-    The diet should be designed for a duration only.
-    
-    Given that this person can only consume the following foods for breakfast and afternoon coffee: (${breakfast})
-    
-    Given that this person can only consume the following foods for lunch and dinner: (${lunch})
-    
-    Using only these attributes:
-    
-    breakfast:
-    lunch:
-    afternoon coffee:
-    dinner:
-    
-    All attributes must be well-detailed text strings and include:
-    
-    Quantities in grams
-    Meal times
-    Clearly state that the meal will meet the person's needs.
-    Use this JSON example:
-    
-    {
-    "breakfast": "For breakfast, you can have a meal around 8:00 AM consisting of 2 scrambled eggs with bread and flour.",
-    "lunch": "For lunch, you can have a satisfying meal with 1 ladle of beans, 2 servings of rice, and 2 pieces of meat.",
-    "afternoon coffee": "For afternoon coffee, you can have a lighter meal of 2 scrambled eggs and bread.",
-    "dinner": "For dinner, you can have a filling meal with 1 and a half ladles of beans and 2 servings of rice.",
-    "description": "<Always make it clear at the end of the messages that if the user doesn't have any of the foods, they can go to the donation centers>"
-    }
-    at the end translate every string except the attributes.`
+The diet should be designed for a duration only.
 
-    const threeMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, and dinner. In each attribute, include the meal times.
+Given that this person can only consume the following foods for breakfast and afternoon coffee: (${breakfast})
 
-    The diet should be designed for a duration only.
-    
-    Given that this person can only consume the following foods for breakfast: (${breakfast})
-    
-    Given that this person can only consume the following foods for lunch and dinner: (${lunch})
-    
-    Using only these attributes:
-    
-    breakfast:
-    lunch:
-    dinner:
-    
-    All attributes must be well-detailed text strings and include:
-    
-    Quantities in grams
-    Meal times
-    Clearly state that the meal will meet the person's needs.
-    Use this JSON example:
-    
-    {
-    "breakfast": "For breakfast, you can have a meal around 8:00 AM consisting of 2 scrambled eggs with bread and flour.",
-    "lunch": "For lunch, you can have a satisfying meal with 1 ladle of beans, 2 servings of rice, and 2 pieces of meat.",*
-    "dinner": "For dinner, you can have a filling meal with 1 and a half ladles of beans and 2 servings of rice.",
-    "description": "<Always make it clear at the end of the messages that if the user doesn't have any of the foods, they can go to the donation centers>"
-    }
-    at the end translate every string except the attributes.`
+Given that this person can only consume the following foods for lunch and dinner: (${lunch})
 
-    var finalPrompt = "" 
-    if(food_frequency === "THREE_MEALS") {
-      finalPrompt = threeMealsPrompt 
-    } else finalPrompt = fourMealsPrompt
-     
+Using only these attributes:
 
-    try {
-      const client = axios.create({
-        headers: { Authorization: `Bearer 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` }
-      })
+breakfast:
+lunch:
+afternoon coffee:
+dinner:
 
-      console.log(finalPrompt)
-      const params = {
-        messages: [{"role": "user", "content": finalPrompt}],
-        model: "gpt-3.5-turbo",
-        max_tokens: 1000,
-        temperature: 0.7
-      };
+All attributes must be well-detailed text strings and include:
 
-      console.log(params)
-  
-      const response = client.post(
-        "https://api.openai.com/v1/chat/completions",
-        params
-      ).then((result) => {
-        //TODO: Mapear esse objetivo para mostrar na tela
-        //setLoading(false)
-        diet = result.data.choices[0].message.content
-        console.log(diet)
-      })
-      .catch((err) => {
-        console.log(err)
-        setLoading(false)
-        alert("Ocorreu um erro, tentar novamente mais tarde.")
-      }) 
-      ;;
-        
-      console.log(response)
-    } catch (error) {
-      // Trate os erros, caso ocorram.
-      console.log(error);
-    }
+Quantities in grams
+Meal times
+Clearly state that the meal will meet the person's needs.
+Use this JSON as an example:
 
-    try {
+{
+"breakfast": "For breakfast, you can have a meal around 8:00 AM consisting of 2 scrambled eggs with bread and flour.",
+"lunch": "For lunch, you can have a satisfying meal with 1 ladle of beans, 2 servings of rice, and 2 pieces of meat.",
+"afternoon coffee": "For afternoon coffee, you can have a lighter meal of 2 scrambled eggs and bread.",
+"dinner": "For dinner, you can have a filling meal with 1 and a half ladles of beans and 2 servings of rice.",
+"description": "<Always make it clear at the end of the messages that if the user doesn't have any of the foods, they can go to the donation centers>"
+}`;
 
-      console.log(name);
-      console.log(cpf);
-      console.log(email);
-      console.log(weight);
-      console.log(height);
-      console.log(birthday);
-      console.log(sex);
-      console.log(food_frequency);
-      console.log(password);
-      console.log(phone);
+      const threeMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, and dinner. In each attribute, include the meal times.
 
-      if (response.ok) {
-        alert("Programa alimentar criado com sucesso");
+translate the attributes value into Portuguese (THE ATTRIBUTE NAME MUST BE IN ENGLISH)
+
+The diet should be designed for a duration only.
+
+Given that this person can only consume the following foods for breakfast: (${breakfast})
+
+Given that this person can only consume the following foods for lunch and dinner: (${lunch})
+
+Using only these attributes:
+
+breakfast:
+lunch:
+dinner:
+
+All attributes must be well-detailed text strings and include:
+
+Quantities in grams
+Meal times
+Clearly state that the meal will meet the person's needs.
+Use this JSON as an example:
+
+{
+"breakfast": "For breakfast, you can have a meal around 8:00 AM consisting of 2 scrambled eggs with bread and flour.",
+"lunch": "For lunch, you can have a satisfying meal with 1 ladle of beans, 2 servings of rice, and 2 pieces of meat.",
+"dinner": "For dinner, you can have a filling meal with 1 and a half ladles of beans and 2 servings of rice.",
+"description": "<Always make it clear at the end of the messages that if the user doesn't have any of the foods, they can go to the donation centers>"
+}`;
+
+      var finalPrompt = "";
+      if (food_frequency === "THREE_MEALS") {
+        finalPrompt = threeMealsPrompt;
       } else {
-        console.log("Error:", response.status);
+        finalPrompt = fourMealsPrompt;
       }
-    } catch (error) {
-      console.log(`Error: ${error}`);
+
+      try {
+        const client = axios.create({
+          headers: {
+            Authorization: `Bearer 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`,
+          },
+        });
+        const params = {
+          messages: [{ role: "user", content: finalPrompt }],
+          model: "gpt-3.5-turbo",
+          max_tokens: 1000,
+          temperature: 0.7,
+        };
+
+        const response = await client.post(
+          "https://api.openai.com/v1/chat/completions",
+          params
+        );
+
+        if (isMounted) {
+          diet = JSON.parse(response.data.choices[0].message.content);
+          setDietData(diet);
+          setLoading(false);
+          console.log(diet);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        alert("Ocorreu um erro, tente novamente mais tarde.");
+      }
+    };
+
+    if (loading) {
+      fetchDietData();
     }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [loading]);
 
   return (
-    <Container>
-      <Background source={require("../../../assets/BackgroundImage.jpg")}>
-        <Kav
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
-        >
-        </Kav>
-      </Background>
-    </Container>
+    <ScrollViewContainer vertical={true}>
+      <Container>
+        {loading ? (
+          <Title style={{ color: "#000", textAlign: "center" }}>
+            Carregando...
+          </Title>
+        ) : (
+          <>
+            <Title style={{ color: "#000", fontSize: 22, marginBottom: 20 }}>
+              Programa alimentar
+            </Title>
+            <Collapse style={{ width: 307 }} isExpanded={true}>
+              <CollapseHeader>
+                <Title style={{ color: "#AE8800", fontSize: 18 }}>
+                  Descrição
+                </Title>
+              </CollapseHeader>
+              <CollapseBody>
+                <Title
+                  style={{
+                    color: "#909090",
+                    fontSize: 14,
+                    fontWeight: "400",
+                  }}
+                >
+                  {dietData?.description}
+                </Title>
+              </CollapseBody>
+            </Collapse>
+            <Collapse style={{ width: 307 }} isExpanded={true}>
+              <CollapseHeader collapsed={false}>
+                <Title style={{ color: "#AE8800", fontSize: 18 }}>
+                  Café da manhã
+                </Title>
+              </CollapseHeader>
+              <CollapseBody>
+                <Title
+                  style={{
+                    color: "#909090",
+                    fontSize: 14,
+                    fontWeight: "400",
+                  }}
+                >
+                  {dietData?.breakfast}
+                </Title>
+              </CollapseBody>
+            </Collapse>
+            <Collapse style={{ width: 307 }}>
+              <CollapseHeader>
+                <Title style={{ color: "#AE8800", fontSize: 18 }}>Almoço</Title>
+              </CollapseHeader>
+              <CollapseBody>
+                <Title
+                  style={{
+                    color: "#909090",
+                    fontSize: 14,
+                    fontWeight: "400",
+                  }}
+                >
+                  {dietData?.lunch}
+                </Title>
+              </CollapseBody>
+            </Collapse>
+
+            {route.params.food_frequency === "FOUR_MEALS" && (
+              <Collapse style={{ width: 307 }}>
+                <CollapseHeader>
+                  <Title style={{ color: "#AE8800", fontSize: 18 }}>
+                    Lanche da tarde
+                  </Title>
+                </CollapseHeader>
+                <CollapseBody>
+                  <Title
+                    style={{
+                      color: "#909090",
+                      fontSize: 14,
+                      fontWeight: "400",
+                    }}
+                  >
+                    {dietData?.["afternoon coffee"]}
+                  </Title>
+                </CollapseBody>
+              </Collapse>
+            )}
+
+            <Collapse style={{ width: 307 }}>
+              <CollapseHeader>
+                <Title style={{ color: "#AE8800", fontSize: 18 }}>Jantar</Title>
+              </CollapseHeader>
+              <CollapseBody>
+                <Title
+                  style={{
+                    color: "#909090",
+                    fontSize: 14,
+                    fontWeight: "400",
+                  }}
+                >
+                  {dietData?.dinner}
+                </Title>
+              </CollapseBody>
+            </Collapse>
+          </>
+        )}
+      </Container>
+    </ScrollViewContainer>
   );
 };
 

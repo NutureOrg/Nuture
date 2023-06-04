@@ -59,7 +59,10 @@ const Lunch = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Liste os alimentos que geralmente estão disponíveis na sua casa para o almoço: " />
+          <Title>
+            Liste os alimentos que geralmente estão disponíveis na sua casa para
+            o almoço
+          </Title>
           <Input
             placeholder="Ex: Arroz, ovo e tomate"
             value={lunch}

@@ -22,14 +22,16 @@ const RecipeOrDiet = () => {
       cpf,
       password,
       phone,
-      birthday
+      birthday,
     });
   };
 
   return (
     <Container>
       <Background source={require("../../../assets/BackgroundImage.jpg")}>
-        <Title text="Você deseja consultar receitas ou montar um programa alimentar?" />
+        <Title>
+          Você deseja consultar receitas ou montar um programa alimentar?
+        </Title>
         <Button onPress={isRecipe}>Consultar Receitas</Button>
         <Button onPress={isDiet}>Programa alimentar</Button>
       </Background>

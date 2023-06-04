@@ -65,8 +65,8 @@ const Gender = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Antes de prosseguir, precisamos de algumas informações importantes sobre você" />
-          <Title text="Sexo" />
+          <Title>Antes de prosseguir, precisamos de algumas informações importantes sobre você</Title>
+          <Title style={{marginTop: 20}}>Sexo</Title>
           <CheckBox
             checked={sex === "male"}
             onPress={() => handleSexChange("male")}
@@ -110,7 +110,7 @@ const Gender = () => {
               },
             }}
           />
-          <Title style={{ marginTop: 20 }} text="Altura" />
+          <Title style={{marginTop: 30}}>Altura</Title>
           <TextInputMask
             style={{
               width: 307,
@@ -127,7 +127,7 @@ const Gender = () => {
             value={formattedHeight}
             onChangeText={handleHeightChange}
           />
-          <Title text="Peso atual" style={{ marginTop: 50 }} />
+          <Title style={{marginTop: 30}}>Peso atual</Title>
           <TextInputMask
             style={{
               width: 307,

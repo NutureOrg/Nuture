@@ -15,56 +15,38 @@ const Breakfast = () => {
     setBreakfast(value);
   };
 
-  const { name, email, cpf, password, phone, birthday, sex, height, weight, food_frequency } =
-      route.params;
-
-      console.log("Breakfast Values: ");
-      console.log(name);
-      console.log(cpf);
-      console.log(email);
-      console.log(weight);
-      console.log(height);
-      console.log(birthday);
-      console.log(sex);
-      console.log(food_frequency);
-      console.log(password);
-      console.log(phone);
-
   const goToLunchScreen = () => {
     if (!breakfast) {
       alert("Preencha o campo.");
       return;
     }
 
-    const { name, email, cpf, password, phone, birthday, sex, height, weight, food_frequency } =
-      route.params;
+    const {
+      name,
+      email,
+      cpf,
+      password,
+      phone,
+      birthday,
+      sex,
+      height,
+      weight,
+      food_frequency,
+    } = route.params;
 
-      console.log(name);
-      console.log(cpf);
-      console.log(email);
-      console.log(weight);
-      console.log(height);
-      console.log(birthday);
-      console.log(sex);
-      console.log(food_frequency);
-      console.log(password);
-      console.log(phone);
-
-    navigation.navigate(
-      "Lunch", {
-        name,
-        email,
-        cpf,
-        password,
-        phone,
-        birthday,
-        sex,
-        height,
-        weight,
-        breakfast,
-        food_frequency
-      }
-    );
+    navigation.navigate("Lunch", {
+      name,
+      email,
+      cpf,
+      password,
+      phone,
+      birthday,
+      sex,
+      height,
+      weight,
+      breakfast,
+      food_frequency,
+    });
   };
 
   return (
@@ -74,7 +56,10 @@ const Breakfast = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Liste os alimentos que geralmente estão disponíveis na sua casa para o café da manhã" />
+          <Title>
+            Liste os alimentos que geralmente estão disponíveis na sua casa para
+            o café da manhã
+          </Title>
           <Input
             value={breakfast}
             onChangeText={handleBreakfast}

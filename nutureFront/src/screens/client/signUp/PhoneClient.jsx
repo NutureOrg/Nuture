@@ -63,7 +63,7 @@ const PhoneClient = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title text="Informe um número de telefone válido" />
+          <Title>Informe um número de telefone válido</Title>
           <TextInputMask
             style={{
               width: 307,
