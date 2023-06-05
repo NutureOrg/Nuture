@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Background, Kav } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import SyncStorage from 'sync-storage';
 
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
@@ -27,6 +27,8 @@ const SignIn = () => {
       return;
     }
 
+    const sync = await SyncStorage.init();
+
     const loginData = {
       username: email.trim(),
       password: password.trim(),
@@ -34,7 +36,7 @@ const SignIn = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.119:8080/nuture/users/login`,
+        `http://192.168.1.108:8080/nuture/users/login`,
         {
           method: "POST",
           body: JSON.stringify(loginData),
@@ -51,7 +53,7 @@ const SignIn = () => {
         console.log("Usuário logado");
         console.log(data);
 
-        await AsyncStorage.setItem("token", token);
+        await SyncStorage.set("token", token);
 
         navigation.navigate("Profile", {
           email

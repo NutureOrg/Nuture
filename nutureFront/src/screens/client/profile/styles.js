@@ -5,5 +5,16 @@ export const Container = styled.View`
   height: 100%;
 `;
 
-export const ScrollViewContainer = styled.ScrollView`
+export const Barra = styled.View`
+  width: 100%;
+  height: 80px;
+  background-color: red;
 `;
+
+export const Menu = styled.View`
+  width: 100%;
+  height: 80px;
+  background-color: red;
+`;
+
+export const ScrollViewContainer = styled.ScrollView``;

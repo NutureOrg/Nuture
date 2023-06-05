@@ -9,23 +9,6 @@ import Button from "../../components/button/Button";
 const StartScreen = () => {
   const navigation = useNavigation();
 
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
-  const checkAuthentication = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      if (token) {
-        navigation.navigate("Profile");
-      } else {
-        navigation.navigate("SignIn");
-      }
-    } catch (error) {
-      console.error("Erro ao verificar a autenticação:", error);
-    }
-  };
-
   const goToSignIn = () => {
     navigation.navigate("SignIn");
   };
