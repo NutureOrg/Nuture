@@ -26,7 +26,7 @@ const Frequency = () => {
       route.params;
 
     try {
-      const response = await fetch(`http://192.168.1.119:8080/nuture/users`, {
+      const response = await fetch(`http://192.168.1.108:8080/nuture/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
