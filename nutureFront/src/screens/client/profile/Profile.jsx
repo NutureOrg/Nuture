@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Menu, ScrollViewContainer } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import { CheckBox } from "react-native-elements";
+
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
@@ -18,6 +20,11 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
+  const [food_frequency, setFood_frequency] = useState("");
+
+  const handleFrequency = (value) => {
+    setFood_frequency(value);
+  };
 
   const handleEdit = () => {
     // Lógica para salvar as alterações
@@ -42,6 +49,40 @@ const Profile = () => {
   };
 
   const { email, token } = route.params;
+
+  const updateUser = async (updatedUserData) => {
+    const id = updatedUserData.id;
+    try {
+      const response = await fetch(
+        `http://192.168.1.119:8080/nuture/users/${id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(updatedUserData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: fullToken,
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (response.ok) {
+        setLoading(false);
+        console.log("Deu certo e Deus é bom");
+        return;
+      } else {
+        throw new Error(
+          "Ocorreu um erro na requisição para editar as informações do usuario"
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert(
+        "Ocorreu um erro na requisição para editar as informações do usuario."
+      );
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -123,6 +164,56 @@ const Profile = () => {
                 placeholder="Peso"
                 value={weight}
                 onChangeText={setWeight}
+              />
+              <CheckBox
+                checked={food_frequency === "THREE_MEALS"}
+                onPress={() => handleFrequency("THREE_MEALS")}
+                title="Três refeições principais"
+                containerStyle={{
+                  margin: 0,
+                  marginLeft: 0,
+                  marginTop: 30,
+                  padding: 0,
+                  backgroundColor: "transparent",
+                  borderWidth: 0,
+                  width: 307,
+                }}
+                checkedColor="#000"
+                uncheckedColor="#fff"
+                titleProps={{
+                  style: {
+                    color: "#000",
+                    marginLeft: 10,
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    width: "100%",
+                  },
+                }}
+              />
+              <CheckBox
+                checked={food_frequency === "FOUR_MEALS"}
+                onPress={() => handleFrequency("FOUR_MEALS")}
+                title="Três refeições principais e um lanche"
+                containerStyle={{
+                  margin: 0,
+                  marginLeft: 0,
+                  marginTop: 30,
+                  padding: 0,
+                  backgroundColor: "transparent",
+                  width: 307,
+                  borderWidth: 0,
+                }}
+                checkedColor="#000"
+                uncheckedColor="#fff"
+                titleProps={{
+                  style: {
+                    color: "#000",
+                    marginLeft: 10,
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    width: "100%",
+                  },
+                }}
               />
               <Button onPress={handleEdit}>Salvar</Button>
             </ScrollViewContainer>
