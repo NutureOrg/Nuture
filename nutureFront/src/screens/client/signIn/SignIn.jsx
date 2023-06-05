@@ -27,9 +27,6 @@ const SignIn = () => {
       return;
     }
 
-    const { name, email, cpf, password, phone, birthday, sex, height, weight } =
-      route.params;
-
     const loginData = {
       username: email.trim(),
       password: password.trim(),
@@ -37,7 +34,7 @@ const SignIn = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.108:8080/nuture/users/login`,
+        `http://192.168.1.119:8080/nuture/users/login`,
         {
           method: "POST",
           body: JSON.stringify(loginData),
@@ -57,15 +54,7 @@ const SignIn = () => {
         await AsyncStorage.setItem("token", token);
 
         navigation.navigate("Profile", {
-          name,
-          email,
-          cpf,
-          password,
-          phone,
-          birthday,
-          sex,
-          height,
-          weight,
+          email
         });
       } else {
         throw new Error("Ocorreu um erro ao fazer login.");
