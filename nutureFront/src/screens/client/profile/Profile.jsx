@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Container, Menu, ScrollViewContainer } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import SyncStorage from "sync-storage";
 
 import Title from "../../../components/title/Title";
 import Button from "../../../components/button/Button";
+import Text from "../../../components/text/Text"
 
 const Profile = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
 
-  const { email } = route.params;
+  const handleEdit = () => {
+    // Logica 
+  };
+
+  const handleDelete = () => {
+    // Lógica para excluir o usuário
+  };
+
+  const { email, token } = route.params;
 
   useEffect(() => {
     let isMounted = true;
 
-    const token = SyncStorage.get("token");
 
     const fullToken = `Bearer ${token}`;
 
@@ -26,7 +34,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.108:8080/nuture/users/email/${email}`,
+          `http://192.168.1.119:8080/nuture/users/email/${email}`,
           {
             method: "GET",
             headers: {
@@ -55,8 +63,8 @@ const Profile = () => {
           });
 
           console.log("Fetch de usuario com sucesso");
-          setLoading(false);
-          console.log(userData);
+          setLoading(false)
+          console.log(data);
 
           return;
         } else {
@@ -84,48 +92,6 @@ const Profile = () => {
   };
 
   return (
-    // <Container>
-    //   <Title
-    //     style={{
-    //       color: "#000",
-    //       fontWeight: "500",
-    //       paddingTop: 100,
-    //       marginLeft: 30,
-    //     }}
-    //   >
-    //     Olá NomeDoUser
-    //   </Title>
-    //   <Title
-    //     style={{
-    //       color: "#000",
-    //       fontWeight: "400",
-    //       fontSize: 18,
-    //       paddingTop: 50,
-    //       marginLeft: 30,
-    //     }}
-    //   >
-    //     Todas as receitas
-    //   </Title>
-    //   <ScrollViewContainer vertical={true}></ScrollViewContainer>
-    //   <Title
-    //     style={{
-    //       color: "#000",
-    //       fontWeight: "400",
-    //       fontSize: 18,
-    //       paddingTop: 30,
-    //       marginLeft: 30,
-    //     }}
-    //   >
-    //     Programas alimentares
-    //   </Title>
-    //   <ScrollViewContainer vertical={true}></ScrollViewContainer>
-    //   <Button
-    //     onPress={create}
-    //     style={{ position: "absolute", bottom: 50, marginLeft: 30 }}
-    //   >
-    //     <Icon name="plus-square" size={30} />
-    //   </Button>
-    // </Container>
     <Container>
       {loading ? (
         <Title style={{ color: "#000", textAlign: "center" }}>
@@ -133,7 +99,23 @@ const Profile = () => {
         </Title>
       ) : (
         <>
-          <Title style={{marginTop: 100, color: "#000",}}>{userData.name}</Title>
+          <Text>Nome: {userData.name}</Text>
+          <Text>Email: {userData.email}</Text>
+          <Text>CPF: {userData.cpf}</Text>
+          <Text>Telefone: {userData.phone.phone_number}</Text>
+          <Text>Data de nascimento: {userData.birthday}</Text>
+          <Text>Sexo: {userData.sex}</Text>
+          <Text>Altura: {userData.height}</Text>
+          <Text>Peso: {userData.weight}</Text>
+          <Text>Frequência alimentar: {userData.food_frequency}</Text>
+
+      {isEditing ? (
+        <Button onPress={handleEdit}>Salvar</Button>
+      ) : (
+        <Button onPress={() => setIsEditing(true)}>Editar</Button>
+      )}
+
+      <Button onPress={handleDelete} >Apagar</Button>
         </>
       )}
     </Container>
