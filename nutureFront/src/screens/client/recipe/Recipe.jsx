@@ -75,7 +75,6 @@ const Recipe = () => {
       .catch((err) => console.log(err));;
   
     } catch (error) {
-      // Trate os erros, caso ocorram.
       console.log(error);
     }
   };

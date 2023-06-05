@@ -1,6 +1,6 @@
 import { React } from "react";
 import { Container, ScrollViewContainer } from "./styles";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Icon from "react-native-vector-icons/Feather";
 
@@ -8,6 +8,26 @@ import Title from "../../../components/title/Title";
 import Button from "../../../components/button/Button";
 
 const Profile = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  
+  const create = () => {
+    const { name, email, cpf, password, phone, birthday, sex, height, weight } =
+      route.params;
+
+    navigation.navigate("RecipeOrDiet", {
+      name,
+      email,
+      cpf,
+      password,
+      phone,
+      birthday,
+      sex,
+      height,
+      weight,
+    });
+  };
+
   return (
     <Container>
       <Title
@@ -31,9 +51,7 @@ const Profile = () => {
       >
         Todas as receitas
       </Title>
-      <ScrollViewContainer vertical={true}>
-
-      </ScrollViewContainer>
+      <ScrollViewContainer vertical={true}></ScrollViewContainer>
       <Title
         style={{
           color: "#000",
@@ -45,10 +63,11 @@ const Profile = () => {
       >
         Programas alimentares
       </Title>
-      <ScrollViewContainer vertical={true}>
-
-      </ScrollViewContainer>
-      <Button style={{ position: "absolute", bottom: 50, marginLeft: 30 }}>
+      <ScrollViewContainer vertical={true}></ScrollViewContainer>
+      <Button
+        onPress={create}
+        style={{ position: "absolute", bottom: 50, marginLeft: 30 }}
+      >
         <Icon name="plus-square" size={30} />
       </Button>
     </Container>

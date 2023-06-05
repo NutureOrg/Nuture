@@ -27,6 +27,9 @@ const SignIn = () => {
       return;
     }
 
+    const { name, email, cpf, password, phone, birthday, sex, height, weight } =
+      route.params;
+
     const loginData = {
       username: email.trim(),
       password: password.trim(),
@@ -53,7 +56,17 @@ const SignIn = () => {
 
         await AsyncStorage.setItem("token", token);
 
-        navigation.navigate("Profile");
+        navigation.navigate("Profile", {
+          name,
+          email,
+          cpf,
+          password,
+          phone,
+          birthday,
+          sex,
+          height,
+          weight,
+        });
       } else {
         throw new Error("Ocorreu um erro ao fazer login.");
       }

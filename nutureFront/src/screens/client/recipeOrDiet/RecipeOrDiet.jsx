@@ -14,7 +14,8 @@ const RecipeOrDiet = () => {
   };
 
   const isDiet = () => {
-    const { name, email, cpf, password, phone, birthday } = route.params;
+    const { name, email, cpf, password, phone, birthday, sex, height, weight } =
+      route.params;
 
     navigation.navigate("Gender", {
       name,
@@ -23,6 +24,9 @@ const RecipeOrDiet = () => {
       password,
       phone,
       birthday,
+      sex,
+      height,
+      weight,
     });
   };
 
