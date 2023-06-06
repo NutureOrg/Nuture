@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Background } from "./styles";
 import axios from "axios";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
@@ -8,18 +9,23 @@ import Button from "../../../components/button/Button";
 
 const Recipe = () => {
   const [ingredients, setIngredients] = useState("");
+  const navigation = useNavigation();
+  const [recipe, setRecipe] = useState({});
+  const route = useRoute();
+  const [loading, setLoading] = useState(true);
 
   const handleIngredientChange = (value) => {
     setIngredients(value);
   };
 
   const fetchRecipe = async () => {
+    const { height, weight, ingredients} = route.params;
     try {
       const client = axios.create({
         headers: { Authorization: `Bearer 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` }
       })
       const params = {
-        messages: [{"role": "user", "content": `Generate a JSON of a recipe table for a person with a height of 1.75m and weight of 60kg, with the attributes "listFood" (a list of ingredients), "methodPreparation" (a string with a detailed description of the recipe preparation), "recipeDescription", and "category".
+        messages: [{"role": "user", "content": `Generate a JSON of a recipe table for a person with a ${height}cm of 1.75m and weight of ${weight}kg, with the attributes "listFood" (a list of ingredients), "methodPreparation" (a string with a detailed description of the recipe preparation), "recipeDescription", and "category".
 
         ${ingredients}
         
@@ -71,7 +77,10 @@ const Recipe = () => {
       const response = client.post(
         "https://api.openai.com/v1/chat/completions",
         params
-      ).then((result) => console.log(result))
+      ).then((result) => {
+        console.log(result)
+        setRecipe(JSON.parse(response.data.choices[0].message.content));
+      })
       .catch((err) => console.log(err));;
   
     } catch (error) {
@@ -79,11 +88,13 @@ const Recipe = () => {
     }
   };
   
+//Fazer o mapeamento aqui
+//Fazer o mapeamento aqui
 
+//Usa como referencia o UserDiets que já ta encaminhado tbm
   return (
     <Container>
-      <Background source={require("../../../assets/BackgroundImage.jpg")}>
-        <Title text="Liste os alimentos disponíveis para a criação da receita" />
+        <Title>Liste os alimentos disponíveis para a criação da receita</Title>
         <Input
           onChangeText={handleIngredientChange}
           value={ingredients}
@@ -92,7 +103,6 @@ const Recipe = () => {
           style={{ height: 50 }}
         ></Input>
         <Button onPress={fetchRecipe}>Consultar Receitas</Button>
-      </Background>
     </Container>
   );
 };

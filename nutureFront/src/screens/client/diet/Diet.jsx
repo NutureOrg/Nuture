@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, TextArea, ScrollViewContainer } from "./styles";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import {
   Collapse,
@@ -9,11 +9,95 @@ import {
 } from "accordion-collapse-react-native";
 
 import Title from "../../../components/title/Title";
+import Button from "../../../components/button/Button";
 
 const Diet = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const [dietData, setDietData] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const { fullyToken, id } = route.params;
+
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.119:8080/nuture/users/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: fullyToken,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setDietData(data.diets);
+        setLoading(false);
+        console.log(`diet Data:: ${dietData}`)
+
+        return;
+      } else {
+        throw new Error("Ocorreu um erro ao iniciar a tela de perfil.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert(
+        "Ocorreu um erro ao iniciar a tela de perfil. Tente novamente mais tarde."
+      );
+    }
+  };
+
+  const saveDiet = async () => {
+    const treatedAfternoon_coffee = dietData?.afternoon_coffee
+    const dietToSave = {
+      description: dietData.description,
+      breakfast: dietData.breakfast,
+      lunch: dietData.lunch,
+      afternoon_coffee: dietData?.afternoon_coffee,
+      dinner: dietData.dinner,
+      user: {
+        id: id
+      }
+    }
+    
+    const jsonDiet = JSON.stringify(dietToSave)
+    console.log(jsonDiet)
+    console.log(fullyToken)
+    try {
+      const response = await fetch(
+        `http://192.168.1.119:8080/nuture/diets`,
+        {
+          method: "POST",
+          body: jsonDiet,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: fullyToken,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        navigation.navigate("UserDiets", {
+          id,
+          fullyToken
+        }
+        )
+
+        return;
+      } else {
+        throw new Error("Ocorreu um erro na requisição de salvar Dieta");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert(
+        "Ocorreu um erro na requisição de salvar Dieta"
+      );
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -21,7 +105,7 @@ const Diet = () => {
     const fetchDietData = async () => {
       let diet = {};
 
-      const { height, weight, breakfast, food_frequency, lunch } = route.params;
+      const { height, weight, breakfast, food_frequency, lunch} = route.params;
 
       const fourMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, afternoon coffee, and dinner. In each attribute, include the meal times.
 
@@ -180,7 +264,7 @@ Use this JSON as an example:
                 </Title>
               </CollapseBody>
             </Collapse>
-            <Collapse style={{ width: 307 }}>
+            <Collapse style={{ width: 307 }} isExpanded={true}>
               <CollapseHeader>
                 <Title style={{ color: "#AE8800", fontSize: 18 }}>Almoço</Title>
               </CollapseHeader>
@@ -198,7 +282,7 @@ Use this JSON as an example:
             </Collapse>
 
             {route.params.food_frequency === "FOUR_MEALS" && (
-              <Collapse style={{ width: 307 }}>
+              <Collapse style={{ width: 307 }} isExpanded={true}>
                 <CollapseHeader>
                   <Title style={{ color: "#AE8800", fontSize: 18 }}>
                     Lanche da tarde
@@ -218,7 +302,7 @@ Use this JSON as an example:
               </Collapse>
             )}
 
-            <Collapse style={{ width: 307 }}>
+            <Collapse style={{ width: 307 }} isExpanded={true}>
               <CollapseHeader>
                 <Title style={{ color: "#AE8800", fontSize: 18 }}>Jantar</Title>
               </CollapseHeader>
@@ -234,6 +318,8 @@ Use this JSON as an example:
                 </Title>
               </CollapseBody>
             </Collapse>
+
+            <Button onPress={saveDiet}>Salvar Plano Alimentar</Button>
           </>
         )}
       </Container>

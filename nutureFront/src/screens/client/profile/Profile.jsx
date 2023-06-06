@@ -55,6 +55,48 @@ const Profile = () => {
     setIsEditing(false);
   };
 
+  const goToDietScreen = () => {
+    const id = userData.id
+    const name = userData.name
+    const email = userData.email
+    const cpf = userData.cpf
+    const password = userData.password
+    const phone = userData.phone
+    const birthday = userData.birthday
+    const sex = userData.sex
+    const height = userData.height
+    const weight = userData.weight
+    const food_frequency = userData.food_frequency
+
+    navigation.navigate("Breakfast", {
+      id,
+      name,
+      email,
+      cpf,
+      password,
+      phone,
+      birthday,
+      sex,
+      height,
+      weight,
+      food_frequency,
+      fullyToken
+    });
+  }
+
+  const goToRecipeScreen = () => {
+    const id = userData.id
+    const height = userData.height
+    const weight = userData.weight
+
+    navigation.navigate("Ingredients", {
+      id,
+      height,
+      weight,
+      fullyToken
+    });
+  }
+
   const handleDeleteUser = async () => {
     const id = userData.id;
     try {
@@ -259,6 +301,8 @@ const Profile = () => {
               <Text>Peso: {userData.weight}</Text>
               <Text>Frequência Alimentar: {userData.food_frequency}</Text>
               <Button onPress={() => setIsEditing(true)}>Editar</Button>
+              <Button onPress={goToDietScreen} style={{ backgroundColor: "green" }}>Criar Programa Alimentar</Button>
+              <Button onPress={goToRecipeScreen} style={{ backgroundColor: "green" }}>Criar Receita</Button>
             </>
           )}
         </>

@@ -23,6 +23,7 @@ const Lunch = () => {
     }
 
     const {
+      id,
       name,
       email,
       cpf,
@@ -34,9 +35,11 @@ const Lunch = () => {
       weight,
       breakfast,
       food_frequency,
+      fullyToken
     } = route.params;
 
     navigation.navigate("Diet", {
+      id,
       name,
       email,
       cpf,
@@ -49,6 +52,7 @@ const Lunch = () => {
       breakfast,
       food_frequency,
       lunch,
+      fullyToken
     });
   };
 

@@ -18,6 +18,8 @@ import Breakfast from "../screens/client/breakfast/Breakfast";
 import Diet from "../screens/client/diet/Diet";
 import Profile from "../screens/client/profile/Profile";
 import StartScreen from "../screens/startScreen/StartScreen";
+import UserDiets from "../screens/client/UserDiets/UserDiets";
+import Ingredients from "../screens/client/Ingredients/Ingredients";
 
 const Routes = () => {
   return (
@@ -82,6 +84,16 @@ const Routes = () => {
         <Stack.Screen
           name="Profile"
           component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UserDiets"
+          component={UserDiets}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Ingredients"
+          component={Ingredients}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
