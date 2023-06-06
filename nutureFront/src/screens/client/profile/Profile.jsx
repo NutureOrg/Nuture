@@ -17,50 +17,54 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [emailInput, setEmailInput] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState();
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [food_frequency, setFood_frequency] = useState("");
+
+  const { email, token } = route.params;
+
+  const fullyToken = `Bearer ${token}`;
 
   const handleFrequency = (value) => {
     setFood_frequency(value);
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     // Lógica para salvar as alterações
     const updatedUserData = {
-      ...userData,
+      id: userData.id,
       name: name,
-      email: email,
-      phone: { phone_number: phoneNumber },
+      cpf: userData.cpf,
+      email: emailInput,
       height: height,
       weight: weight,
+      birthday: userData.birthday,
+      sex: userData.sex,
+      food_frequency: food_frequency,
+      phone: { 
+        ddi: 55,
+        ddd: 11,
+        phone_number: parseInt(phoneNumber)
+      },
     };
 
-    // Chame uma função ou faça uma requisição para salvar as alterações no backend
-    // ...
-
     setUserData(updatedUserData);
+    console.log(updatedUserData)
+    await updateUser(updatedUserData);
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
-    // Lógica para excluir o usuário
-  };
-
-  const { email, token } = route.params;
-
-  const updateUser = async (updatedUserData) => {
-    const id = updatedUserData.id;
+  const handleDeleteUser = async () => {
+    const id = userData.id;
     try {
       const response = await fetch(
         `http://192.168.1.119:8080/nuture/users/${id}`,
         {
-          method: "PUT",
-          body: JSON.stringify(updatedUserData),
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: fullToken,
+            Authorization: fullyToken,
           },
         }
       );
@@ -70,67 +74,90 @@ const Profile = () => {
       if (response.ok) {
         setLoading(false);
         console.log("Deu certo e Deus é bom");
+        navigation.navigate("StartScreen");
+        alert("Usuário deletado com sucesso.");
         return;
       } else {
         throw new Error(
-          "Ocorreu um erro na requisição para editar as informações do usuario"
+          "Ocorreu um erro na requisição para deletar o usuário."
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Ocorreu um erro na requisição para deletar o usuário.");
+    }
+  };
+
+  const updateUser = async (updatedUserData) => {
+    const id = updatedUserData.id;
+    console.log(id)
+    console.log(`updatedUserData: ${JSON.stringify(updatedUserData)}`);
+    try {
+      const response = await fetch(
+        `http://192.168.1.119:8080/nuture/users/${id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(updatedUserData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: fullyToken,
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (response.ok) {
+        setLoading(false);
+        console.log("Deu certo e Deus é bom e o DIABO não existe :envil:");
+        return;
+      } else {
+        throw new Error(
+          "Ocorreu um erro na requisição para editar as informações do usuário"
         );
       }
     } catch (error) {
       console.error("Error:", error);
       alert(
-        "Ocorreu um erro na requisição para editar as informações do usuario."
+        "Ocorreu um erro na requisição para editar as informações do usuário."
       );
     }
   };
 
   useEffect(() => {
-    let isMounted = true;
-
-    const fullToken = `Bearer ${token}`;
-
-    console.log(fullToken);
-
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.108:8080/nuture/users/email/${email}`,
+          `http://192.168.1.119:8080/nuture/users/email/${email}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: fullToken,
+              Authorization: fullyToken,
             },
           }
         );
 
         if (response.ok) {
           const data = await response.json();
-
           setUserData(data);
           setLoading(false);
-          console.log(data);
+          console.log(`fetched User: ${userData}`)
 
           return;
         } else {
-          throw new Error("Ocorreu um erro ao iniciar a tela profile.");
+          throw new Error("Ocorreu um erro ao iniciar a tela de perfil.");
         }
       } catch (error) {
         console.error("Error:", error);
         alert(
-          "Ocorreu um erro ao iniciar a tela profile. Tente novamente mais tarde."
+          "Ocorreu um erro ao iniciar a tela de perfil. Tente novamente mais tarde."
         );
       }
     };
 
-    if (loading) {
-      fetchUser();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [loading]);
+    fetchUser();
+  }, []);
 
   const create = () => {
     navigation.navigate("RecipeOrDiet");
@@ -216,6 +243,9 @@ const Profile = () => {
                 }}
               />
               <Button onPress={handleEdit}>Salvar</Button>
+              <Button onPress={handleDeleteUser} style={{ backgroundColor: "red" }}>
+                Apagar Usuário
+              </Button>
             </ScrollViewContainer>
           ) : (
             <>
@@ -223,16 +253,14 @@ const Profile = () => {
               <Text>Email: {userData.email}</Text>
               <Text>CPF: {userData.cpf}</Text>
               <Text>Telefone: {userData.phone.phone_number}</Text>
-              <Text>Data de nascimento: {userData.birthday}</Text>
+              <Text>Data de Nascimento: {userData.birthday}</Text>
               <Text>Sexo: {userData.sex}</Text>
               <Text>Altura: {userData.height}</Text>
               <Text>Peso: {userData.weight}</Text>
-              <Text>Frequência alimentar: {userData.food_frequency}</Text>
+              <Text>Frequência Alimentar: {userData.food_frequency}</Text>
               <Button onPress={() => setIsEditing(true)}>Editar</Button>
             </>
           )}
-
-          <Button onPress={handleDelete}>Apagar</Button>
         </>
       )}
     </Container>

@@ -35,7 +35,7 @@ const SignIn = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.108:8080/nuture/users/login`,
+        `http://192.168.1.119:8080/nuture/users/login`,
         {
           method: "POST",
           body: JSON.stringify(loginData),
@@ -61,7 +61,7 @@ const SignIn = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Ocorreu um erro ao fazer login. Tente novamente mais tarde.");
+      alert("Verifique email e senha e tente novamente mais tarde.");
     }
   };
 
