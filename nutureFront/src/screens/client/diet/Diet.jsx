@@ -86,7 +86,6 @@ const Diet = () => {
           fullyToken
         }
         )
-
         return;
       } else {
         throw new Error("Ocorreu um erro na requisição de salvar Dieta");
