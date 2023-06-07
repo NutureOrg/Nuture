@@ -6,6 +6,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
+import { Text } from "react-native/types";
 
 const Recipe = () => {
   const [ingredients, setIngredients] = useState("");
@@ -94,15 +95,19 @@ const Recipe = () => {
 //Usa como referencia o UserDiets que já ta encaminhado tbm
   return (
     <Container>
-        <Title>Liste os alimentos disponíveis para a criação da receita</Title>
-        <Input
-          onChangeText={handleIngredientChange}
-          value={ingredients}
-          multiline={false}
-          numberOfLines={20}
-          style={{ height: 50 }}
-        ></Input>
-        <Button onPress={fetchRecipe}>Consultar Receitas</Button>
+
+      <Title>{recipe.description}</Title>
+
+      {recipe.ingredients.map((ingredient, id) => {
+        <>
+        <Title key={id}>{ingredient.food}</Title>
+        <Title key={id}>{ingredient.quantity}</Title>
+        <Title key={id}>{ingredient.category}</Title>
+
+        <Text>{ingredient.description}</Text>
+        </>
+      })}
+        
     </Container>
   );
 };
