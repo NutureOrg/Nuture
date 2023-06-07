@@ -8,7 +8,7 @@ import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
 import Link from "../../../components/link/Link";
 import Button from "../../../components/button/Button";
-import Text from '../../../components/text/Text'
+import Text from "../../../components/text/Text";
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -29,31 +29,6 @@ const Profile = () => {
 
   const handleFrequency = (value) => {
     setFood_frequency(value);
-  };
-
-  const handleEdit = async () => {
-    // Lógica para salvar as alterações
-    const updatedUserData = {
-      id: userData.id,
-      name: name,
-      cpf: userData.cpf,
-      email: emailInput,
-      height: height,
-      weight: weight,
-      birthday: userData.birthday,
-      sex: userData.sex,
-      food_frequency: food_frequency,
-      phone: {
-        ddi: 55,
-        ddd: 11,
-        phone_number: parseInt(phoneNumber),
-      },
-    };
-
-    setUserData(updatedUserData);
-    console.log(updatedUserData);
-    await updateUser(updatedUserData);
-    setIsEditing(false);
   };
 
   const goToDietScreen = () => {
@@ -144,6 +119,30 @@ const Profile = () => {
     }
   };
 
+  const handleEdit = async () => {
+    const updatedUserData = {
+      id: userData.id,
+      name: name,
+      cpf: userData.cpf,
+      email: emailInput,
+      height: height,
+      weight: weight,
+      birthday: userData.birthday,
+      sex: userData.sex,
+      food_frequency: food_frequency,
+      phone: {
+        ddi: 55,
+        ddd: 11,
+        phone_number: parseInt(phoneNumber),
+      },
+    };
+
+    setUserData(updatedUserData);
+    console.log(updatedUserData);
+    await updateUser(updatedUserData);
+    setIsEditing(false);
+  };
+
   const updateUser = async (updatedUserData) => {
     const id = updatedUserData.id;
     console.log(id);
@@ -198,7 +197,6 @@ const Profile = () => {
           const data = await response.json();
           setUserData(data);
           setLoading(false);
-          console.log(`fetched User: ${userData}`);
 
           return;
         } else {

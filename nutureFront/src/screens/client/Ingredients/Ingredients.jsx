@@ -24,10 +24,9 @@ const Ingredients = () => {
       id,
       height,
       weight,
-      fullyToken
-    })
-  }
-  
+      fullyToken,
+    });
+  };
 
   return (
     <Container>

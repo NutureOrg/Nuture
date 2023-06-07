@@ -1,11 +1,20 @@
-import React, { useState, useEffect} from "react";
-import { Container, Background } from "./styles";
+import React, { useState, useEffect } from "react";
+import { Container, Background, Header, ScrollViewContainer } from "./styles";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+} from "accordion-collapse-react-native";
 
 import Title from "../../../components/title/Title";
+import Text from "../../../components/text/Text";
+import Link from "../../../components/link/Link";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
+
+import Icon from "react-native-vector-icons/Feather";
 
 const Recipe = () => {
   const [ingredients, setIngredients] = useState("");
@@ -14,8 +23,60 @@ const Recipe = () => {
   const route = useRoute();
   const [loading, setLoading] = useState(true);
 
+  const { id, height, weight, fullyToken } = route.params;
+
+  const token = fullyToken;
+
   const handleIngredientChange = (value) => {
     setIngredients(value);
+  };
+
+  const goToProfileScreen = () => {
+    navigation.navigate("Profile", {
+      token,
+    });
+  };
+
+  const saveRecipe = async () => {
+    const recipeToSave = {
+      description: recipe.description,
+      ingredients: {
+        food: [],
+        quantity: [],
+        category: [],
+      },
+    };
+
+    recipe.listFood.forEach((ingredient) => {
+      recipeToSave.ingredients.push(ingredient);
+    });
+
+    const jsonRecipe = JSON.stringify(recipeToSave);
+
+    try {
+      const response = await fetch("http://192.168.1.108:8080/nuture/recipes", {
+        method: "POST",
+        body: jsonRecipe,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        navigation.navigate("", {
+          id,
+          token,
+        });
+        return;
+      } else {
+        throw new Error("Ocorreu um erro na requisição de salvar a receita.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Ocorreu um erro na requisição de salvar a receita.");
+    }
   };
 
   useEffect(() => {
@@ -37,7 +98,7 @@ const Recipe = () => {
   
           ${ingredients}
           
-          Generate a recipe that will maximize the amount of food possible while providing the highest satiety, and make it clear in the attribute. All attributes must be well-detailed text strings.
+          Generate a recipe IN PORTUGUESE that will maximize the amount of food possible while providing the highest satiety, and make it clear in the attribute. All attributes must be well-detailed text strings.
           
           Create a cool recipe with a user-friendly preparation method, including the following details:
           - Quantities in grams
@@ -76,8 +137,9 @@ const Recipe = () => {
           modoDePreparo -> methodPreparation
           descricaoReceira -> recipeDescription
           
-          Finally, merge the methodPreparation and recipeDescription into a single string with the attribute name "description".`,
-            }
+          Finally, merge the methodPreparation and recipeDescription into a single string with the attribute name "description".
+          `,
+            },
           ],
           model: "gpt-3.5-turbo",
           max_tokens: 1000,
@@ -86,15 +148,12 @@ const Recipe = () => {
 
         const response = await client.post(
           "https://api.openai.com/v1/chat/completions",
-           params
-          );
-        
+          params
+        );
+
         if (isMounted) {
           const responseData = response.data.choices[0].message.content;
-          const sanitizedData = responseData.replace(
-            /[\u0000-\u001F]+/g,
-            ""
-          );
+          const sanitizedData = responseData.replace(/[\u0000-\u001F]+/g, "");
           recipeee = JSON.parse(sanitizedData);
           setRecipe(recipeee);
           setLoading(false);
@@ -115,26 +174,122 @@ const Recipe = () => {
     };
   }, [loading]);
 
-  //Fazer o mapeamento aqui
-  //Fazer o mapeamento aqui
-
-  //Usa como referencia o UserDiets que já ta encaminhado tbm
   return (
     <Container>
       {loading ? (
-        <Title style={{color: "#000"}}>Ta carregando padrinho...</Title>
+        <Title style={{ color: "#000", textAlign: "center" }}>
+          Carregando...
+        </Title>
       ) : (
-       // <Container>
-          <Title>{recipe.description}</Title>
+        <>
+          <Header>
+            <Link onPress={goToProfileScreen}>
+              <Icon name="arrow-left" size={30} color="#AE8800" />
+            </Link>
+            <Title
+              style={{
+                marginTop: 20,
+                color: "#000",
+                fontWeight: "500",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              Receita personalizada
+            </Title>
+          </Header>
+          <>
+            <Collapse
+              style={{
+                padding: 10,
+                backgroundColor: "#fff",
+                borderRadius: 5,
+                marginTop: 50,
+              }}
+              isExpanded={true}
+            >
+              <CollapseHeader
+                style={{
+                  height: 50,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  borderBottomWidth: 1,
+                  borderColor: "#AE8800",
+                }}
+              >
+                <Title style={{ color: "#AE8800", fontSize: 20 }}>
+                  Sua receita
+                </Title>
+                <Link onPress={saveRecipe} style={{ marginBottom: 15 }}>
+                  <Icon name="save" size={25} color="#AE8800" />
+                </Link>
+              </CollapseHeader>
+              <CollapseBody style={{ width: "100%" }}>
+                <ScrollViewContainer>
+                  <Collapse>
+                    <CollapseHeader>
+                      <Title
+                        style={{
+                          color: "#000",
+                          fontSize: 18,
+                          fontWeight: "500",
+                          width: "100%",
+                          marginTop: 20,
+                        }}
+                      >
+                        Descrição da receita
+                      </Title>
+                    </CollapseHeader>
+                    <CollapseBody>
+                      <Text
+                        style={{
+                          color: "#909090",
+                          fontSize: 14,
+                          fontWeight: "400",
+                          width: "100%",
+                        }}
+                      >
+                        {recipe.description}
+                      </Text>
+                    </CollapseBody>
+                  </Collapse>
 
-          //{recipe.ingredients.map((ingredient, id) => {
-         //   <>
-         //     <Title key={id}>{ingredient.food}</Title>
-         //     <Title key={id}>{ingredient.quantity}</Title>
-         //</>     <Title key={id}>{ingredient.category}</Title>
-         //   </>;
-        //  })}
-       // </Container>
+                  <Title
+                    style={{
+                      color: "#000",
+                      fontSize: 18,
+                      fontWeight: "500",
+                      width: "100%",
+                      marginTop: 20,
+                    }}
+                  >
+                    Ingredientes necessários
+                  </Title>
+                  <Text
+                    style={{
+                      color: "#909090",
+                      fontSize: 14,
+                      fontWeight: "400",
+                      width: "100%",
+                    }}
+                  >
+                    {recipe.listFood.map((ingredient) => (
+                      <>
+                        <Text
+                          key={ingredient.food}
+                          style={{ color: "#909090" }}
+                        >
+                          {ingredient.food} - {ingredient.quantity} -{" "}
+                        </Text>
+                      </>
+                    ))}
+                  </Text>
+                </ScrollViewContainer>
+              </CollapseBody>
+            </Collapse>
+          </>
+        </>
       )}
     </Container>
   );

@@ -3,12 +3,15 @@ import styled from "styled-components/native";
 export const Container = styled.View`
   width: 100%;
   height: 100%;
+  padding: 80px 20px;
 `;
 
-export const Background = styled.ImageBackground`
+export const Header = styled.View`
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
+  max-height: 100%;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
+
+export const ScrollViewContainer = styled.ScrollView``;
