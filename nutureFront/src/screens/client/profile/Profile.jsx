@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Container, Menu, ScrollViewContainer } from "./styles";
+import { Container, Menu, ScrollViewContainer, Header, Barra } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import Icon from "react-native-vector-icons/Feather";
 import { CheckBox } from "react-native-elements";
 
 import Title from "../../../components/title/Title";
 import Input from "../../../components/input/Input";
+import Link from "../../../components/link/Link";
 import Button from "../../../components/button/Button";
-import Text from "../../../components/text/Text";
+import Text from '../../../components/text/Text'
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -42,31 +43,31 @@ const Profile = () => {
       birthday: userData.birthday,
       sex: userData.sex,
       food_frequency: food_frequency,
-      phone: { 
+      phone: {
         ddi: 55,
         ddd: 11,
-        phone_number: parseInt(phoneNumber)
+        phone_number: parseInt(phoneNumber),
       },
     };
 
     setUserData(updatedUserData);
-    console.log(updatedUserData)
+    console.log(updatedUserData);
     await updateUser(updatedUserData);
     setIsEditing(false);
   };
 
   const goToDietScreen = () => {
-    const id = userData.id
-    const name = userData.name
-    const email = userData.email
-    const cpf = userData.cpf
-    const password = userData.password
-    const phone = userData.phone
-    const birthday = userData.birthday
-    const sex = userData.sex
-    const height = userData.height
-    const weight = userData.weight
-    const food_frequency = userData.food_frequency
+    const id = userData.id;
+    const name = userData.name;
+    const email = userData.email;
+    const cpf = userData.cpf;
+    const password = userData.password;
+    const phone = userData.phone;
+    const birthday = userData.birthday;
+    const sex = userData.sex;
+    const height = userData.height;
+    const weight = userData.weight;
+    const food_frequency = userData.food_frequency;
 
     navigation.navigate("Breakfast", {
       id,
@@ -80,35 +81,35 @@ const Profile = () => {
       height,
       weight,
       food_frequency,
-      fullyToken
+      fullyToken,
     });
-  }
+  };
 
   const goToRecipeScreen = () => {
-    const id = userData.id
-    const height = userData.height
-    const weight = userData.weight
+    const id = userData.id;
+    const height = userData.height;
+    const weight = userData.weight;
 
     navigation.navigate("Ingredients", {
       id,
       height,
       weight,
-      fullyToken
+      fullyToken,
     });
-  }
+  };
 
   const goToUserDietScreen = () => {
-    const id = userData.id
-    const height = userData.height
-    const weight = userData.weight
+    const id = userData.id;
+    const height = userData.height;
+    const weight = userData.weight;
 
     navigation.navigate("UserDiets", {
       id,
       height,
       weight,
-      fullyToken
+      fullyToken,
     });
-  }
+  };
 
   const handleDeleteUser = async () => {
     const id = userData.id;
@@ -145,7 +146,7 @@ const Profile = () => {
 
   const updateUser = async (updatedUserData) => {
     const id = updatedUserData.id;
-    console.log(id)
+    console.log(id);
     console.log(`updatedUserData: ${JSON.stringify(updatedUserData)}`);
     try {
       const response = await fetch(
@@ -197,7 +198,7 @@ const Profile = () => {
           const data = await response.json();
           setUserData(data);
           setLoading(false);
-          console.log(`fetched User: ${userData}`)
+          console.log(`fetched User: ${userData}`);
 
           return;
         } else {
@@ -298,26 +299,100 @@ const Profile = () => {
                 }}
               />
               <Button onPress={handleEdit}>Salvar</Button>
-              <Button onPress={handleDeleteUser} style={{ backgroundColor: "red" }}>
+              <Button
+                onPress={handleDeleteUser}
+                style={{ backgroundColor: "red" }}
+              >
                 Apagar Usuário
               </Button>
             </ScrollViewContainer>
           ) : (
-            <>
-              <Text>Nome: {userData.name}</Text>
-              <Text>Email: {userData.email}</Text>
-              <Text>CPF: {userData.cpf}</Text>
-              <Text>Telefone: {userData.phone.phone_number}</Text>
-              <Text>Data de Nascimento: {userData.birthday}</Text>
-              <Text>Sexo: {userData.sex}</Text>
-              <Text>Altura: {userData.height}</Text>
-              <Text>Peso: {userData.weight}</Text>
-              <Text>Frequência Alimentar: {userData.food_frequency}</Text>
-              <Button onPress={() => setIsEditing(true)}>Editar</Button>
-              <Button onPress={goToDietScreen} style={{ backgroundColor: "green" }}>Criar Programa Alimentar</Button>
-              <Button onPress={goToRecipeScreen} style={{ backgroundColor: "green" }}>Criar Receita</Button>
-              <Button onPress={goToUserDietScreen} style={{ backgroundColor: "green" }}>UserDiet</Button>
-            </>
+            <ScrollViewContainer>
+              <Header>
+                <Title
+                  style={{ color: "#000", fontSize: 20, fontWeight: "500" }}
+                >
+                  Olá, {userData.name}
+                </Title>
+                <Link
+                  onPress={() => setIsEditing(true)}
+                  style={{ marginBottom: 20 }}
+                >
+                  <Icon name="edit" size={25} color="#AE8800" />
+                </Link>
+              </Header>
+              <Barra />
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: "#909090",
+                  fontSize: 18,
+                  fontWeight: "400",
+                }}
+              >
+                A sua saúde e bem-estar são nossa prioridade, e estamos
+                empenhados em ajudá-lo a superar as carências alimentares. Nosso
+                app foi desenvolvido com esse objetivo em mente, oferecendo
+                recursos e orientações para garantir que você tenha acesso a um
+                programa alimentar balanceado e nutritivo.
+              </Text>
+              <Button
+                onPress={goToDietScreen}
+                style={{
+                  marginTop: 0,
+                  width: "100%",
+                  backgroundColor: "#AE8800",
+                }}
+              >
+                Criar Programa Alimentar
+              </Button>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: "#909090",
+                  fontSize: 18,
+                  fontWeight: "400",
+                }}
+              >
+                Entendemos que cada indivíduo tem necessidades alimentares
+                únicas, e é por isso que nosso app oferece opções
+                personalizadas. Você poderá criar receitas adaptadas às suas
+                necessidades específicas.
+              </Text>
+              <Button
+                onPress={goToRecipeScreen}
+                style={{
+                  marginTop: 0,
+                  width: "100%",
+                  backgroundColor: "#AE8800",
+                }}
+              >
+                Criar Receita
+              </Button>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: "#909090",
+                  fontSize: 18,
+                  fontWeight: "400",
+                }}
+              >
+                Com a funcionalidade de visualização de programas alimentares já
+                criados, você pode revisitar suas dietas personalizadas e obter
+                uma visão completa das escolhas alimentares que você fez
+                anteriormente.
+              </Text>
+              <Button
+                onPress={goToUserDietScreen}
+                style={{
+                  marginTop: 0,
+                  width: "100%",
+                  backgroundColor: "#AE8800",
+                }}
+              >
+                Programas cadastrados
+              </Button>
+            </ScrollViewContainer>
           )}
         </>
       )}

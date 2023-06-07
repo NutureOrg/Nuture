@@ -145,6 +145,7 @@ const UserDiets = () => {
                   color: "#000",
                   fontWeight: "500",
                   fontSize: 20,
+                  textAlign: "center",
                 }}
               >
                 Programas alimentares
