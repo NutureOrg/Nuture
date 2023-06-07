@@ -1,7 +1,9 @@
 import styled from "styled-components/native";
 
 export const LinkButton = styled.TouchableOpacity`
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const LinkText = styled.Text`

@@ -22,7 +22,7 @@ const Diet = () => {
   const fetchUser = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.119:8080/nuture/users/${id}`,
+        `http://192.168.1.108:8080/nuture/users/${id}`,
         {
           method: "GET",
           headers: {
@@ -68,7 +68,7 @@ const Diet = () => {
     console.log(fullyToken)
     try {
       const response = await fetch(
-        `http://192.168.1.119:8080/nuture/diets`,
+        `http://192.168.1.108:8080/nuture/diets`,
         {
           method: "POST",
           body: jsonDiet,

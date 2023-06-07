@@ -97,11 +97,24 @@ const Profile = () => {
     });
   }
 
+  const goToUserDietScreen = () => {
+    const id = userData.id
+    const height = userData.height
+    const weight = userData.weight
+
+    navigation.navigate("UserDiets", {
+      id,
+      height,
+      weight,
+      fullyToken
+    });
+  }
+
   const handleDeleteUser = async () => {
     const id = userData.id;
     try {
       const response = await fetch(
-        `http://192.168.1.119:8080/nuture/users/${id}`,
+        `http://192.168.1.108:8080/nuture/users/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -136,7 +149,7 @@ const Profile = () => {
     console.log(`updatedUserData: ${JSON.stringify(updatedUserData)}`);
     try {
       const response = await fetch(
-        `http://192.168.1.119:8080/nuture/users/${id}`,
+        `http://192.168.1.108:8080/nuture/users/${id}`,
         {
           method: "PUT",
           body: JSON.stringify(updatedUserData),
@@ -170,7 +183,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.119:8080/nuture/users/email/${email}`,
+          `http://192.168.1.108:8080/nuture/users/email/${email}`,
           {
             method: "GET",
             headers: {
@@ -303,6 +316,7 @@ const Profile = () => {
               <Button onPress={() => setIsEditing(true)}>Editar</Button>
               <Button onPress={goToDietScreen} style={{ backgroundColor: "green" }}>Criar Programa Alimentar</Button>
               <Button onPress={goToRecipeScreen} style={{ backgroundColor: "green" }}>Criar Receita</Button>
+              <Button onPress={goToUserDietScreen} style={{ backgroundColor: "green" }}>UserDiet</Button>
             </>
           )}
         </>
