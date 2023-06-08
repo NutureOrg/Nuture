@@ -379,63 +379,6 @@ RM94395 | Samuel Pereira Nascimento
 
 ---
 
-### Update Recipe
-
-`PUT` /nuture/recipes/{id}
-
-**Requisition Fields**
-
-| field       | type                | mandatory | description          |
-|-------------|---------------------|:---------:|----------------------|
-| name        | String              |    no     | recipe's name        |
-| description | String              |    no     | recipe's description |
-| ingredients | List of Ingredients |    no     | recipe's ingredients |
-
-**Requisition Body Example**
-
-```js
-{
-    "name": "Chicken Pasta",
-    "description": "Cook the penne following pack instructions. Drain and toss with the remaining oil. Tip the pasta into a medium sized ovenproof dish. Stir in the chicken and pour over the sauce. Top with the cheddar, mozzarella and parsley.",
-    "ingredients": [
-        {
-          "name": "Penne",
-          "quantity": "500g",
-          "category": "Protein"
-        },
-        {
-          "name": "Olive oil",
-          "quantity": "4 tbsp",
-          "category": "Oil"
-        },
-        {
-          "name": "Cheddar",
-          "quantity": "70g",
-          "category": "Cheese"
-        },
-        {
-          "name": "Chicken breasts",
-          "quantity": "4",
-          "category": "Protein"
-        }
-    ],
-    "user": {
-        "id": 1
-    }
-}
-
-```
-
-**Responses Codes**
-
-| code | description                 |
-|------|-----------------------------|
-| 201  | recipe successfully updated |
-| 400  | invalid fields              |
-| 404  | recipe not found            |
-
----
-
 ### Find Recipe By Id
 
 `GET` /nuture/recipes/{id}
@@ -631,46 +574,6 @@ RM94395 | Samuel Pereira Nascimento
 |------|---------------------------|
 | 201  | diet successfully created |
 | 400  | invalid fields            |
-
----
-
-### Update Diet
-
-`PUT` /nuture/diets/{id}
-
-**Requisition Fields**
-
-| field            | type   | mandatory | description                            |
-|------------------|--------|:---------:|----------------------------------------|
-| description      | String |    no     | diet's description                     |
-| breakfast        | String |    no     | diet's breakfast recommendation        |
-| lunch            | String |    no     | diet's lunch recommendation            |
-| afternoon coffee | String |    no     | diet's afternoon coffee recommendation |
-| dinner           | String |    no     | diet's dinner recommendation           |
-| user id          | Long   |    no     | diet's user ID                         |
-
-**Requisition Body Example**
-
-```js
-{
-    "description": "Essa dieta foi planejada para uma pessoa com altura de 1,75m e peso de 60kg, visando suprir suas necessidades nutricionais diárias.",
-    "breakfast": "2 ovos mexidos, 50g de pão integral e uma xícara de chá ou café sem açúcar.",
-    "lunch": "1 concha de feijão (100g), 2 porções de arroz (100g cada) e 100g de ovos cozidos.",
-    "afternoon_coffee": "2 ovos mexidos, 50g de pão integral e uma fruta de sua escolha.",
-    "dinner": "1 concha e meia de feijão (150g), 2 porções de arroz (100g cada) e uma salada de vegetais variados.",
-    "user": {
-        "id": 1
-    }
-}
-```
-
-**Responses Codes**
-
-| code | description               |
-|------|---------------------------|
-| 201  | diet successfully updated |
-| 400  | invalid fields            |
-| 404  | diet not found            |
 
 ---
 
