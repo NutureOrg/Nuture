@@ -86,6 +86,19 @@ const Profile = () => {
     });
   };
 
+  const goToUserRecipeScreen = () => {
+    const id = userData.id;
+    const height = userData.height;
+    const weight = userData.weight;
+
+    navigation.navigate("UserRecipes", {
+      id,
+      height,
+      weight,
+      fullyToken,
+    });
+  };
+
   const handleDeleteUser = async () => {
     const id = userData.id;
     try {
@@ -164,7 +177,7 @@ const Profile = () => {
 
       if (response.ok) {
         setLoading(false);
-        console.log("Deu certo e Deus é bom e o DIABO não existe :envil:");
+        alert("As informações do usuário foram editadas com sucesso.");
         return;
       } else {
         throw new Error(
@@ -225,26 +238,38 @@ const Profile = () => {
         <>
           {isEditing ? (
             <ScrollViewContainer vertical={true}>
-              <Input placeholder="Nome" value={name} onChangeText={setName} />
+              <Title style={{ color: "#AE8800" }}>
+                Você está editando suas informações
+              </Title>
+              <Input
+                placeholder="Nome"
+                value={name}
+                onChangeText={setName}
+                style={{ width: "100%" }}
+              />
               <Input
                 placeholder="Email"
                 value={emailInput}
+                style={{ width: "100%" }}
                 onChangeText={setEmailInput}
               />
               <Input
                 placeholder="Telefone"
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
+                style={{ width: "100%" }}
               />
               <Input
                 placeholder="Altura"
                 value={height}
                 onChangeText={setHeight}
+                style={{ width: "100%" }}
               />
               <Input
                 placeholder="Peso"
                 value={weight}
                 onChangeText={setWeight}
+                style={{ width: "100%" }}
               />
               <CheckBox
                 checked={food_frequency === "THREE_MEALS"}
@@ -259,11 +284,11 @@ const Profile = () => {
                   borderWidth: 0,
                   width: 307,
                 }}
-                checkedColor="#000"
-                uncheckedColor="#fff"
+                checkedColor="#AE8800"
+                uncheckedColor="#AE8800"
                 titleProps={{
                   style: {
-                    color: "#000",
+                    color: "#AE8800",
                     marginLeft: 10,
                     fontSize: 14,
                     fontWeight: "bold",
@@ -278,17 +303,17 @@ const Profile = () => {
                 containerStyle={{
                   margin: 0,
                   marginLeft: 0,
-                  marginTop: 30,
+                  marginTop: 10,
                   padding: 0,
                   backgroundColor: "transparent",
                   width: 307,
                   borderWidth: 0,
                 }}
-                checkedColor="#000"
-                uncheckedColor="#fff"
+                checkedColor="#AE8800"
+                uncheckedColor="#AE8800"
                 titleProps={{
                   style: {
-                    color: "#000",
+                    color: "#AE8800",
                     marginLeft: 10,
                     fontSize: 14,
                     fontWeight: "bold",
@@ -296,10 +321,12 @@ const Profile = () => {
                   },
                 }}
               />
-              <Button onPress={handleEdit}>Salvar</Button>
+              <Button onPress={handleEdit} style={{ width: "100%" }}>
+                Salvar
+              </Button>
               <Button
                 onPress={handleDeleteUser}
-                style={{ backgroundColor: "red" }}
+                style={{ backgroundColor: "red", width: "100%" }}
               >
                 Apagar Usuário
               </Button>
@@ -389,6 +416,30 @@ const Profile = () => {
                 }}
               >
                 Programas cadastrados
+              </Button>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: "#909090",
+                  fontSize: 18,
+                  fontWeight: "400",
+                }}
+              >
+                A página de receitas cadastradas do usuário é uma ferramenta que
+                permite acessar e visualizar as receitas que você salvou
+                anteriormente. Com essa funcionalidade, você pode revisitar suas
+                criações culinárias e ter uma visão abrangente das deliciosas
+                escolhas alimentares que você fez ao longo do tempo.
+              </Text>
+              <Button
+                onPress={goToUserRecipeScreen}
+                style={{
+                  marginTop: 0,
+                  width: "100%",
+                  backgroundColor: "#AE8800",
+                }}
+              >
+                Receitas cadastradas
               </Button>
             </ScrollViewContainer>
           )}

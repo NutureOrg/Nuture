@@ -20,9 +20,19 @@ const SignIn = () => {
     setPassword(value);
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const signIn = async () => {
     if (!email || !password) {
       alert("Preencha todos os campos");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert("Email inválido");
       return;
     }
 
@@ -31,7 +41,7 @@ const SignIn = () => {
       password: password.trim(),
     };
 
-    console.log(loginData)
+    console.log(loginData);
 
     try {
       const response = await fetch(
@@ -54,7 +64,7 @@ const SignIn = () => {
 
         navigation.navigate("Profile", {
           email,
-          token
+          token,
         });
       } else {
         throw new Error("Ocorreu um erro ao fazer login.");
@@ -84,12 +94,14 @@ const SignIn = () => {
           />
           <Input
             placeholder="Senha"
-            secureTextEntry
             value={password}
             onChangeText={handlePasswordChange}
+            secureTextEntry={true}
           />
           <Button onPress={signIn}>Entrar</Button>
-          <Link onPress={signUpClient}>Criar conta</Link>
+          <Link onPress={signUpClient} style={{ marginTop: 10 }}>
+            Criar conta
+          </Link>
         </Kav>
       </Background>
     </Container>

@@ -20,8 +20,21 @@ const SignUp = () => {
     navigation.navigate("SignIn");
   };
 
-  const handleCpfChange = (value) => {
-    setCpf(value);
+  const formatCpf = (value) => {
+    const cpfRegex = /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/;
+    const match = value.replace(/\D/g, "").match(cpfRegex);
+    const formattedCpf = !match
+      ? ""
+      : match
+          .slice(1)
+          .filter((group) => group !== "")
+          .join(".");
+    setCpf(formattedCpf);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const handleSubmit = () => {
@@ -35,10 +48,17 @@ const SignUp = () => {
       return;
     }
 
+    if (!validateEmail(email)) {
+      alert("Email inválido");
+      return;
+    }
+
+    const cleanedCpf = cpf.replace(/\D/g, "");
+
     navigation.navigate("PhoneClient", {
       name,
       email,
-      cpf,
+      cpf: cleanedCpf,
       password,
     });
   };
@@ -63,21 +83,27 @@ const SignUp = () => {
           />
           <Input
             placeholder="CPF válido"
+            type="cpf"
             value={cpf}
-            onChangeText={handleCpfChange}
+            onChangeText={formatCpf}
+            keyboardType="numeric"
           />
           <Input
             placeholder="Nova senha"
             value={password}
             onChangeText={setPassword}
+            secureTextEntry={true}
           />
           <Input
             placeholder="Confirme a senha"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
+            secureTextEntry={true}
           />
           <Button onPress={handleSubmit}>Registrar</Button>
-          <Link onPress={signIn}>Já tem uma conta? Entrar</Link>
+          <Link onPress={signIn} style={{ marginTop: 10 }}>
+            Já tem uma conta? Entrar
+          </Link>
         </Kav>
       </Background>
     </Container>

@@ -36,7 +36,7 @@ const Diet = () => {
         const data = await response.json();
         setDietData(data.diets);
         setLoading(false);
-        console.log(`diet Data:: ${dietData}`)
+        console.log(`diet Data:: ${dietData}`);
 
         return;
       } else {
@@ -51,7 +51,6 @@ const Diet = () => {
   };
 
   const saveDiet = async () => {
-    const treatedAfternoon_coffee = dietData?.afternoon_coffee
     const dietToSave = {
       description: dietData.description,
       breakfast: dietData.breakfast,
@@ -59,42 +58,36 @@ const Diet = () => {
       afternoon_coffee: dietData?.afternoon_coffee,
       dinner: dietData.dinner,
       user: {
-        id: id
-      }
-    }
-    
-    const jsonDiet = JSON.stringify(dietToSave)
-    console.log(jsonDiet)
-    console.log(fullyToken)
+        id: id,
+      },
+    };
+
+    const jsonDiet = JSON.stringify(dietToSave);
+    console.log(jsonDiet);
+    console.log(fullyToken);
     try {
-      const response = await fetch(
-        `http://192.168.1.108:8080/nuture/diets`,
-        {
-          method: "POST",
-          body: jsonDiet,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: fullyToken,
-          },
-        }
-      );
+      const response = await fetch(`http://192.168.1.108:8080/nuture/diets`, {
+        method: "POST",
+        body: jsonDiet,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: fullyToken,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
         navigation.navigate("UserDiets", {
           id,
-          fullyToken
-        }
-        )
+          fullyToken,
+        });
         return;
       } else {
         throw new Error("Ocorreu um erro na requisição de salvar Dieta");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert(
-        "Ocorreu um erro na requisição de salvar Dieta"
-      );
+      alert("Ocorreu um erro na requisição de salvar Dieta");
     }
   };
 
@@ -104,11 +97,11 @@ const Diet = () => {
     const fetchDietData = async () => {
       let diet = {};
 
-      const { height, weight, breakfast, food_frequency, lunch} = route.params;
+      const { height, weight, breakfast, food_frequency, lunch } = route.params;
 
       const fourMealsPrompt = `generate a JSON for a diet table for a person with a height of ${height}cm and weight of ${weight}kg, with attributes breakfast, lunch, afternoon coffee, and dinner. In each attribute, include the meal times.
 
-translate the attributes value into Portuguese (THE ATTRIBUTE NAME MUST BE IN ENGLISH)
+translate the attributes value into Portuguese (THE ATTRIBUTE NAME MUST BE IN ENGLISH AND ALL THE ATTRIBUTES VALUE MUST BE WITH MAXIMUM 150 CHARACTERES)
 
 The diet should be designed for a duration only.
 
@@ -165,8 +158,9 @@ Use this JSON as an example:
 "breakfast": "For breakfast, you can have a meal around 8:00 AM consisting of 2 scrambled eggs with bread and flour.",
 "lunch": "For lunch, you can have a satisfying meal with 1 ladle of beans, 2 servings of rice, and 2 pieces of meat.",
 "dinner": "For dinner, you can have a filling meal with 1 and a half ladles of beans and 2 servings of rice.",
-"description": "<Always make it clear at the end of the messages that if the user doesn't have any of the foods, they can go to the donation centers>"
-}`;
+"description": "Chatgpt, put description of how to make generally of all this food"
+} 
+`;
 
       var finalPrompt = "";
       if (food_frequency === "THREE_MEALS") {

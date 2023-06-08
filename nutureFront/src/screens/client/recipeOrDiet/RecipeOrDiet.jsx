@@ -9,10 +9,6 @@ const RecipeOrDiet = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const isRecipe = () => {
-    navigation.navigate("Recipe");
-  };
-
   const isDiet = () => {
     const { name, email, cpf, password, phone, birthday, sex, height, weight } =
       route.params;
@@ -33,10 +29,7 @@ const RecipeOrDiet = () => {
   return (
     <Container>
       <Background source={require("../../../assets/BackgroundImage.jpg")}>
-        <Title>
-          Você deseja consultar receitas ou montar um programa alimentar?
-        </Title>
-        <Button onPress={isRecipe}>Consultar Receitas</Button>
+        <Title>Crie um programa alimentar inicial</Title>
         <Button onPress={isDiet}>Programa alimentar</Button>
       </Background>
     </Container>

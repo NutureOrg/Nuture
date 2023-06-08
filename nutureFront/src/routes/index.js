@@ -20,6 +20,7 @@ import Profile from "../screens/client/profile/Profile";
 import StartScreen from "../screens/startScreen/StartScreen";
 import UserDiets from "../screens/client/UserDiets/UserDiets";
 import Ingredients from "../screens/client/Ingredients/Ingredients";
+import UserRecipes from "../screens/client/UserRecipes/UserRecipes";
 
 const Routes = () => {
   return (
@@ -94,6 +95,11 @@ const Routes = () => {
         <Stack.Screen
           name="Ingredients"
           component={Ingredients}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UserRecipes"
+          component={UserRecipes}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

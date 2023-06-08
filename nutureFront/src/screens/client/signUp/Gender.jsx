@@ -6,6 +6,7 @@ import { TextInputMask } from "react-native-masked-text";
 import Title from "../../../components/title/Title";
 import { CheckBox } from "react-native-elements";
 import Button from "../../../components/button/Button";
+import Input from "../../../components/input/Input";
 
 const Gender = () => {
   const navigation = useNavigation();
@@ -14,16 +15,6 @@ const Gender = () => {
   const [sex, setSex] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  const [formattedHeight, setFormattedHeight] = useState("");
-  const [formattedWeight, setFormattedWeight] = useState("");
-
-  useEffect(() => {
-    setFormattedHeight(`${height}cm`);
-  }, [height]);
-
-  useEffect(() => {
-    setFormattedWeight(`${weight}kg`);
-  }, [weight]);
 
   const handleSexChange = (value) => {
     setSex(value);
@@ -53,8 +44,8 @@ const Gender = () => {
       phone,
       birthday,
       sex,
-      height,
-      weight,
+      height: height + " cm",
+      weight: weight + " kg",
     });
   };
 
@@ -65,8 +56,11 @@ const Gender = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <Title>Antes de prosseguir, precisamos de algumas informações importantes sobre você</Title>
-          <Title style={{marginTop: 20}}>Sexo</Title>
+          <Title>
+            Antes de prosseguir, precisamos de algumas informações importantes
+            sobre você
+          </Title>
+          <Title style={{ marginTop: 20 }}>Sexo</Title>
           <CheckBox
             checked={sex === "male"}
             onPress={() => handleSexChange("male")}
@@ -110,38 +104,16 @@ const Gender = () => {
               },
             }}
           />
-          <Title style={{marginTop: 30}}>Altura</Title>
-          <TextInputMask
-            style={{
-              width: 307,
-              height: 55,
-              paddingLeft: 10,
-              borderRadius: 10,
-              backgroundColor: "#fff",
-            }}
+          <Title style={{ marginTop: 30 }}>Altura</Title>
+          <Input
             placeholder="Ex: 170 cm"
-            type={"custom"}
-            options={{
-              mask: "999cm",
-            }}
-            value={formattedHeight}
+            value={height}
             onChangeText={handleHeightChange}
           />
-          <Title style={{marginTop: 30}}>Peso atual</Title>
-          <TextInputMask
-            style={{
-              width: 307,
-              height: 55,
-              paddingLeft: 10,
-              borderRadius: 10,
-              backgroundColor: "#fff",
-            }}
+          <Title style={{ marginTop: 30 }}>Peso atual</Title>
+          <Input
             placeholder="Ex: 70 kg"
-            type={"custom"}
-            options={{
-              mask: "99kg",
-            }}
-            value={formattedWeight}
+            value={weight}
             onChangeText={handleWeightChange}
           />
           <Button onPress={handleSubmit}>Continuar</Button>

@@ -2,8 +2,16 @@ import React from "react";
 import { InputText } from "./styles";
 
 const Input = (props) => {
-  const { type, placeholder, value, multiline, numberOfLines, style, onChangeText } =
-    props;
+  const {
+    type,
+    placeholder,
+    value,
+    multiline,
+    numberOfLines,
+    style,
+    onChangeText,
+    secureTextEntry,
+  } = props;
 
   return (
     <InputText
@@ -14,6 +22,7 @@ const Input = (props) => {
       style={style}
       value={value}
       onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry}
     />
   );
 };
