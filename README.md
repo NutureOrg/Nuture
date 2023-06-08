@@ -2,6 +2,8 @@ RM94269 | Douglas Welber Santos de Aguiar <br/>
 RM94278 | Leonardo Silva Macedo <br/>
 RM94395 | Samuel Pereira Nascimento
 
+Professor, utilize essa API key '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' para requisições no chatGPT
+
 ## Endpoints
 
 - Users
